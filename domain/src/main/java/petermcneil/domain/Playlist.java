@@ -15,6 +15,7 @@ public class Playlist {
 
     private Playlist(Builder from) {
         this.title = from.title;
+
         if (from.tracks != null) {
             this.tracks = ImmutableList.copyOf(from.tracks);
         }else

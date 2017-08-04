@@ -73,5 +73,10 @@ public class Playlist {
             this.title = title;
             return this;
         }
+
+        public Builder tracks(List<Song> tracks){
+            this.tracks = tracks;
+            return this;
+        }
     }
 }

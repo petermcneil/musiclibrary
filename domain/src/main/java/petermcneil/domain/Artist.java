@@ -1,19 +1,29 @@
 package petermcneil.domain;
 
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.Set;
+
 public class Artist {
     private final String name;
     private final String type;
     private final Bio bio;
+    private final Set<Recording> recordings;
 
     private Artist(Builder from) {
         this.name = from.name;
         this.type = from.type;
         this.bio = from.bio;
+
+        if (from.recordings != null){
+            this.recordings = ImmutableSet.copyOf(from.recordings);
+        }else{
+            this.recordings = ImmutableSet.of();
+        }
     }
 
     public static Builder artistBuilder(){
@@ -54,6 +64,7 @@ public class Artist {
         private String name;
         private String type;
         private Bio bio;
+        private Set<Recording> recordings;
 
         private Builder(){}
 
@@ -61,6 +72,7 @@ public class Artist {
             this.name = toCopy.name;
             this.type = toCopy.type;
             this.bio = toCopy.bio;
+            this.recordings = toCopy.recordings;
         }
 
         public Builder name(String name){
@@ -75,6 +87,11 @@ public class Artist {
 
         public Builder bio(Bio bio){
             this.bio = bio;
+            return this;
+        }
+
+        public Builder recordings(Set<Recording> recordings){
+            this.recordings = recordings;
             return this;
         }
 

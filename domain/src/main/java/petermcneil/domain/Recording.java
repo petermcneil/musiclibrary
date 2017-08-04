@@ -15,14 +15,14 @@ public class Recording {
     private final Set<Song> tracks;
     private final String label;
     private final String artwork;
-    private final Artist artist;
+//    private final Artist artist;
 
     private Recording(Builder from) {
         this.type = from.type;
         this.title = from.title;
         this.label = from.label;
         this.artwork = from.artwork;
-        this.artist = from.artist;
+//        this.artist = from.artist;
 
         if(from.tracks != null){
             this.tracks = ImmutableSet.copyOf(from.tracks);
@@ -39,9 +39,11 @@ public class Recording {
         return new Builder(this);
     }
 
+/*
     public Artist getArtist() {
         return artist;
     }
+*/
 
     @Override
     public boolean equals(Object o) {
@@ -88,7 +90,7 @@ public class Recording {
         private Set<Song> tracks;
         private String label;
         private String artwork;
-        private Artist artist;
+//        private Artist artist;
 
         private Builder(){}
 
@@ -98,7 +100,7 @@ public class Recording {
             this.tracks = toCopy.tracks;
             this.label = toCopy.label;
             this.artwork = toCopy.artwork;
-            this.artist = toCopy.artist;
+//            this.artist = toCopy.artist;
         }
 
         public Recording build(){
@@ -124,11 +126,13 @@ public class Recording {
             this.artwork = artwork;
             return this;
         }
+/*
 
         public Builder artist(Artist artist){
             this.artist = artist;
             return this;
         }
+*/
 
         public Builder tracks(Set<Song> tracks){
             this.tracks = tracks;

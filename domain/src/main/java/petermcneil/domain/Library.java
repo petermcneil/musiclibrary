@@ -1,5 +1,7 @@
 package petermcneil.domain;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,9 +13,26 @@ public class Library {
     private final Set<Recording> library;
     private final Set<Playlist> playlists;
 
-    public Library(Set<Recording> library, Set<Playlist> playlists) {
-        this.library = library;
-        this.playlists = playlists;
+    private Library(Builder from) {
+        if(from != null) {
+            this.library = ImmutableSet.copyOf(from.library);
+        }else{
+            this.library = ImmutableSet.of();
+        }
+
+        if(from != null) {
+            this.playlists = ImmutableSet.copyOf(from.playlists);
+        }else{
+            this.playlists = ImmutableSet.of();
+        }
+    }
+
+    public static Builder libraryBuilder(){
+        return new Builder();
+    }
+
+    public Builder copy(){
+        return new Builder(this);
     }
     @Override
     public boolean equals(Object o) {
@@ -35,6 +54,32 @@ public class Library {
 
     public Set<Playlist> getPlaylists() {
         return playlists;
+    }
+
+    public static class Builder{
+        private Set<Recording> library;
+        private Set<Playlist> playlists;
+
+        private Builder(){}
+
+        private Builder(Library toCopy){
+            this.library = toCopy.library;
+            this.playlists = toCopy.playlists;
+        }
+
+        public Builder library(Set<Recording> library){
+            this.library = library;
+            return this;
+        }
+
+        public Builder playlists(Set<Playlist> playlists){
+            this.playlists = playlists;
+            return this;
+        }
+
+        public Library build(){
+            return new Library(this);
+        }
     }
 
 }

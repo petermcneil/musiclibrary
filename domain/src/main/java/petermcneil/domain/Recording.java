@@ -1,5 +1,6 @@
 package petermcneil.domain;
 
+import com.google.common.collect.ImmutableSet;
 import oracle.jrockit.jfr.openmbean.RecordingType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -19,10 +20,15 @@ public class Recording {
     private Recording(Builder from) {
         this.type = from.type;
         this.title = from.title;
-        this.tracks = from.tracks;
         this.label = from.label;
         this.artwork = from.artwork;
         this.artist = from.artist;
+
+        if(from.tracks != null){
+            this.tracks = ImmutableSet.copyOf(from.tracks);
+        }else{
+            this.tracks = ImmutableSet.of();
+        }
     }
 
     public static Builder recordingBuilder(){
@@ -121,6 +127,11 @@ public class Recording {
 
         public Builder artist(Artist artist){
             this.artist = artist;
+            return this;
+        }
+
+        public Builder tracks(Set<Song> tracks){
+            this.tracks = tracks;
             return this;
         }
     }

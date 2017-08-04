@@ -10,10 +10,10 @@ public class Artist {
     private final String type;
     private final Bio bio;
 
-    private Artist(Builder toCopy) {
-        this.name = toCopy.name;
-        this.type = toCopy.type;
-        this.bio = toCopy.bio;
+    private Artist(Builder from) {
+        this.name = from.name;
+        this.type = from.type;
+        this.bio = from.bio;
     }
 
     public static Builder artistBuilder(){

@@ -1,5 +1,6 @@
 package petermcneil.domain;
 
+import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,11 +22,16 @@ public class Song {
         this.title = from.title;
         this.length = from.length;
         this.leadArtist = from.leadArtist;
-        this.featuredArtists = from.featuredArtists;
         this.genre = from.genre;
         this.artwork = from.artwork;
         this.lyrics = from.lyrics;
         this.playcount = from.playcount;
+
+        if(from.featuredArtists != null){
+            this.featuredArtists = ImmutableSet.copyOf(from.featuredArtists);
+        }else{
+            this.featuredArtists = ImmutableSet.of();
+        }
     }
 
     public static Builder songBuilder(){
@@ -140,6 +146,12 @@ public class Song {
             this.playcount = playcount;
             return this;
         }
+
+        public Builder featuredArtists(Set<Artist> featuredArtists){
+            this.featuredArtists = featuredArtists;
+            return this;
+        }
+
         public Song build(){
             return new Song(this);
         }

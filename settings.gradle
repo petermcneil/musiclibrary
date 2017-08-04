@@ -1,3 +1,4 @@
 rootProject.name = 'musiclibrary'
 include 'domain'
+include 'app'
 

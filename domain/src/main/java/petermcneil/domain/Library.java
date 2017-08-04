@@ -1,6 +1,5 @@
 package petermcneil.domain;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -15,7 +14,7 @@ public class Library {
 
     private Library(Builder from) {
         if(from != null) {
-            this.library = ImmutableSet.copyOf(from.library);
+            this.library = ImmutableSet.copyOf(from.recordings);
         }else{
             this.library = ImmutableSet.of();
         }
@@ -57,18 +56,18 @@ public class Library {
     }
 
     public static class Builder{
-        private Set<Recording> library;
+        private Set<Recording> recordings;
         private Set<Playlist> playlists;
 
         private Builder(){}
 
         private Builder(Library toCopy){
-            this.library = toCopy.library;
+            this.recordings = toCopy.library;
             this.playlists = toCopy.playlists;
         }
 
-        public Builder library(Set<Recording> library){
-            this.library = library;
+        public Builder recordings(Set<Recording> library){
+            this.recordings = library;
             return this;
         }
 

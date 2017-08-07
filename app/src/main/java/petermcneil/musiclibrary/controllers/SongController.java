@@ -3,6 +3,7 @@ package petermcneil.musiclibrary.controllers;
 import petermcneil.domain.Song;
 import petermcneil.musiclibrary.services.SongService;
 
+import java.util.List;
 import java.util.Set;
 
 public class SongController {
@@ -17,7 +18,7 @@ public class SongController {
         return db.getSong(id);
     }
 
-    public Set<Song> getSongs(){
+    public List<Song> getSongs(){
         return db.getSongs();
     }
 

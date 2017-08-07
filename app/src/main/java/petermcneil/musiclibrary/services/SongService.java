@@ -2,14 +2,11 @@ package petermcneil.musiclibrary.services;
 
 import petermcneil.domain.Song;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SongService {
     private final Map<Integer, Song> songDB;
-    private Integer nextEntry =0;
 
     public SongService(){
         songDB = new ConcurrentHashMap<>();
@@ -19,8 +16,8 @@ public class SongService {
         return songDB.get(id);
     }
 
-    public Set<Song> getSongs() {
-        Set<Song> songs = new HashSet();
+    public List<Song> getSongs() {
+        List<Song> songs = new ArrayList<>();
 
         for(Map.Entry<Integer, Song> entry: songDB.entrySet()){
             songs.add(entry.getValue());
@@ -29,9 +26,18 @@ public class SongService {
     }
 
     public Integer postSong(Song song) {
-        songDB.put(nextEntry, song);
-        Integer oldEntry = nextEntry;
-        nextEntry++;
-        return oldEntry;
+        Integer songId = songDB.size();
+        songDB.put(songId, song);
+        return songId;
+    }
+
+    //TODO: Change delete song to "delete" song
+    public boolean deleteSong(Integer songId){
+        if (songDB.containsKey(songId)){
+            songDB.remove(songId);
+            return true;
+        }else {
+            return false;
+        }
     }
 }

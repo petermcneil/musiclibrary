@@ -1,12 +1,16 @@
 package petermcneil.musiclibrary.services;
 
+import org.springframework.stereotype.Service;
 import petermcneil.domain.Song;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
+@Service
 public class SongService {
     private final Map<Integer, Song> songDB;
+    private AtomicLong highestInt = new AtomicLong(0);
 
     public SongService(){
         songDB = new ConcurrentHashMap<>();
@@ -18,7 +22,6 @@ public class SongService {
 
     public List<Song> getSongs() {
         List<Song> songs = new ArrayList<>();
-
         for(Map.Entry<Integer, Song> entry: songDB.entrySet()){
             songs.add(entry.getValue());
         }
@@ -26,12 +29,12 @@ public class SongService {
     }
 
     public Integer postSong(Song song) {
-        Integer songId = songDB.size();
+        Long temp = highestInt.getAndIncrement();
+        Integer songId = temp.intValue();
         songDB.put(songId, song);
         return songId;
     }
 
-    //TODO: Change delete song to "delete" song
     public boolean deleteSong(Integer songId){
         if (songDB.containsKey(songId)){
             songDB.remove(songId);

@@ -1,14 +1,11 @@
 package petermcneil.musiclibrary.services;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import petermcneil.domain.Song;
 
-import java.lang.reflect.Executable;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -60,15 +57,24 @@ public class SongServiceTest {
         songDB.get(4);
     }
 
-    //TODO: Redo test after deleteSong has been changed
     @Test
     public void deleteSong() throws Exception{
         SongService ss = new SongService();
         ss.postSong(song1);
-        ss.postSong(song1);
         ss.postSong(song2);
+        ss.postSong(song1);
         ss.postSong(song2);
 
         ss.deleteSong(0);
+        assertNull(ss.getSong(0));
+
+        ss.deleteSong(3);
+        assertNull(ss.getSong(3));
+
+        ss.postSong(song1);
+        assertEquals(ss.getSong(4), song1);
+
+        ss.deleteSong(4);
+        assertNull(ss.getSong(4));
     }
 }

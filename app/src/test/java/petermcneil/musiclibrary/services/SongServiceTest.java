@@ -26,6 +26,17 @@ public class SongServiceTest {
     }
 
     @Test
+    public void putSong() throws Exception{
+        SongService ss = new SongService();
+
+        ss.postSong(song1);
+        assertTrue(ss.getSong(0) == song1);
+
+        ss.putSong(0, song2);
+        assertTrue(ss.getSong(0) == song2);
+    }
+
+    @Test
     public void getSong() throws Exception {
         SongService ss = new SongService();
         ss.postSong(song1);

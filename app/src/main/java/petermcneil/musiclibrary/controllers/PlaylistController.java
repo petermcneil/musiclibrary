@@ -4,11 +4,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import petermcneil.domain.Playlist;
 import petermcneil.musiclibrary.services.PlaylistService;
 
 import java.util.Set;
 
+@RestController
 public class PlaylistController {
     private final PlaylistService db;
 
@@ -17,7 +19,7 @@ public class PlaylistController {
     }
 
     @RequestMapping("/playlists")
-    public String getPlaylistSet(Model model){
+    public String getPlaylistList(Model model){
         model.addAttribute("playlists", db.getPlaylistList());
         return "/playlists";
     }

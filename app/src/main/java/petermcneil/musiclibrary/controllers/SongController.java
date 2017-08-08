@@ -32,7 +32,7 @@ public class SongController {
         return "song";
     }
 
-    @RequestMapping(value="/songs", method= RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value="/songs", method= RequestMethod.GET)
     public String getSongs(Model model){
         model.addAttribute("songs", db.getSongs());
         return "/songs";
@@ -44,13 +44,14 @@ public class SongController {
         return "redirect:/song/{" + songId + "}";
     }
 
-    public void deleteSong(Integer songId){
+    @RequestMapping(value = "/song/{songId}", method = RequestMethod.DELETE)
+    public String deleteSong(@PathVariable Integer songId){
         boolean worked = db.deleteSong(songId);
         if(worked == true){
-
+            return "/songs";
         }else{
             //throw error
-            System.out.println("That id did not exist");
+            return "";
         }
     }
 

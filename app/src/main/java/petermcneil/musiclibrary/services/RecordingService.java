@@ -3,6 +3,7 @@ package petermcneil.musiclibrary.services;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Recording;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,8 +22,8 @@ public class RecordingService {
         return recordingDB.get(recordingId);
     }
 
-    public Set<Recording> getRecordings(){
-        Set<Recording> recordings = null;
+    public Set<Recording> getRecordingList(){
+        Set<Recording> recordings = new HashSet<>();
         for(Map.Entry<Integer, Recording> entry: recordingDB.entrySet()){
             recordings.add(entry.getValue());
         }

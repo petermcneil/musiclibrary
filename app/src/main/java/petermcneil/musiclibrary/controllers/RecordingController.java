@@ -18,7 +18,7 @@ public class RecordingController {
 
     @RequestMapping(value = "/recordings", method = RequestMethod.GET)
     public String getRecordingList(){
-        db.getRecordings();
+        db.getRecordingList();
         return "recordings";
     }
 

@@ -1,5 +1,6 @@
 package petermcneil.musiclibrary.services;
 
+import org.springframework.stereotype.Service;
 import petermcneil.domain.Playlist;
 
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Service
 public class PlaylistService {
     private final Map<Integer, Playlist> playlistDB;
     private AtomicLong highestInt = new AtomicLong(0);

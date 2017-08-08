@@ -33,6 +33,7 @@ public class Artist {
     public Builder copy(){
         return new Builder(this);
     }
+
     public String getName() {
         return name;
     }
@@ -43,6 +44,10 @@ public class Artist {
 
     public Bio getBio() {
         return bio;
+    }
+
+    public Set<Recording> getRecordings() {
+        return recordings;
     }
 
     @Override

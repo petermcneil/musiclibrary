@@ -43,4 +43,8 @@ public class SongService {
             return false;
         }
     }
+
+    public void putSong(Integer songId, Song song) {
+        songDB.put(songId, song);
+    }
 }

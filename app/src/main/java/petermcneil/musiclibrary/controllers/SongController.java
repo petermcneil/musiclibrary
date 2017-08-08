@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import petermcneil.domain.Artist;
 import petermcneil.domain.Song;
@@ -12,9 +13,8 @@ import petermcneil.musiclibrary.services.SongService;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class SongController {
-
     private final SongService db;
 
     public SongController(SongService db){
@@ -42,6 +42,13 @@ public class SongController {
     public String postSong(Song song){
         Integer songId = db.postSong(song);
         return "redirect:/song/{" + songId + "}";
+    }
+
+    @RequestMapping(value = "/song/{songId}", method = RequestMethod.PUT)
+    public String putSong(@PathVariable Integer songId, Song song, Model model){
+        db.putSong(songId, song);
+        model.addAttribute(song);
+        return "song";
     }
 
     @RequestMapping(value = "/song/{songId}", method = RequestMethod.DELETE)

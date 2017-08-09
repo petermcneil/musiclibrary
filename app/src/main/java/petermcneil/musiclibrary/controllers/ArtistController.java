@@ -1,5 +1,6 @@
 package petermcneil.musiclibrary.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import petermcneil.domain.Artist;
 import petermcneil.musiclibrary.services.ArtistService;
 
-@RestController
+@Controller
 public class ArtistController {
     private final ArtistService db;
 
@@ -26,12 +27,6 @@ public class ArtistController {
     public String getArtistList(Model model){
         model.addAttribute("artists", db.getArtistList());
         return "artistList";
-    }
-
-    @RequestMapping(value = "/artist/{artistId}/recordings", method = RequestMethod.GET)
-    public String getArtistsRecording(@PathVariable Integer artistId, Model model){
-        model.addAttribute(db.getArtistRecordingList(artistId));
-        return "artistRecordings";
     }
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)

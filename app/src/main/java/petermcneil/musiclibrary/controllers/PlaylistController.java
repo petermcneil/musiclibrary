@@ -1,5 +1,6 @@
 package petermcneil.musiclibrary.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import petermcneil.musiclibrary.services.PlaylistService;
 
 import java.util.Set;
 
-@RestController
+@Controller
 public class PlaylistController {
     private final PlaylistService db;
 

@@ -1,5 +1,6 @@
 package petermcneil.musiclibrary.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import petermcneil.domain.Recording;
 import petermcneil.musiclibrary.services.RecordingService;
 
-@RestController
+@Controller
 public class RecordingController {
     private RecordingService db;
 

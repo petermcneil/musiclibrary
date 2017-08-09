@@ -32,11 +32,6 @@ public class ArtistService {
         return artists;
     }
 
-    public Set<Recording> getArtistRecordingList(Integer artistId){
-        Artist artist = artistDB.get(artistId);
-        return artist.getRecordings();
-    }
-
     public Integer postArtist(Artist artist){
         Long tmp = highestInt.getAndIncrement();
         Integer artistId = tmp.intValue();

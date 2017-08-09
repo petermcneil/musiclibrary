@@ -20,7 +20,7 @@ public class SongService {
         return songDB.get(id);
     }
 
-    public List<Song> getSongs() {
+    public List<Song> getSongList() {
         List<Song> songs = new ArrayList<>();
         for(Map.Entry<Integer, Song> entry: songDB.entrySet()){
             songs.add(entry.getValue());

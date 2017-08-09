@@ -1,17 +1,13 @@
 package petermcneil.musiclibrary.controllers;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import petermcneil.domain.Artist;
 import petermcneil.domain.Song;
 import petermcneil.musiclibrary.services.SongService;
-
-import java.util.List;
 
 @RestController
 public class SongController {
@@ -34,8 +30,8 @@ public class SongController {
 
     @RequestMapping(value="/songs", method= RequestMethod.GET)
     public String getSongs(Model model){
-        model.addAttribute("songs", db.getSongs());
-        return "/songs";
+        model.addAttribute("songs", db.getSongList());
+        return "songs";
     }
 
     @RequestMapping(value="/song", method = RequestMethod.POST)
@@ -55,7 +51,7 @@ public class SongController {
     public String deleteSong(@PathVariable Integer songId){
         boolean worked = db.deleteSong(songId);
         if(worked == true){
-            return "/songs";
+            return "redirect:/songs";
         }else{
             //throw error
             return "";

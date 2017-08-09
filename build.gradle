@@ -3,6 +3,8 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
+ext.springBoot = "1.5.6.RELEASE"
+
 sourceCompatibility = 1.8
 
 task wrapper(type: Wrapper){

@@ -52,14 +52,14 @@ public class SongServiceTest {
     }
 
     @Test
-    public void getSongs() throws Exception {
+    public void getSongList() throws Exception {
         SongService ss = new SongService();
         ss.postSong(song1);
         ss.postSong(song1);
         ss.postSong(song2);
         ss.postSong(song2);
 
-        List<Song> songDB = ss.getSongs();
+        List<Song> songDB = ss.getSongList();
 
         assertEquals(songDB.get(0), song1);
         assertEquals(songDB.get(3), song2);

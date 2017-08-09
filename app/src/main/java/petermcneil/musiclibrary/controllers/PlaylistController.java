@@ -18,33 +18,34 @@ public class PlaylistController {
         this.db = db;
     }
 
-    @RequestMapping("/playlists")
+    @RequestMapping(value = "/playlists", method = RequestMethod.GET)
     public String getPlaylistList(Model model){
         model.addAttribute("playlists", db.getPlaylistList());
-        return "/playlists";
+        return "playlistList";
     }
 
     @RequestMapping(value = "/playlist/{playlistId}", method = RequestMethod.GET)
     public String getPlaylist(@PathVariable Integer playlistId, Model model){
         model.addAttribute(db.getPlaylist(playlistId));
-        return "/playlist/";
+        return "playlist";
     }
 
     @RequestMapping(value = "/playlist", method = RequestMethod.POST)
     public String postPlaylist(Playlist playlist){
         Integer playlistId = db.postPlaylist(playlist);
-        return "/playlist/{" + playlistId +"}";
+        return "redirect:/playlist/{" + playlistId +"}";
     }
 
     @RequestMapping(value = "/playlist/{playlistId}/{playlist}", method = RequestMethod.PUT)
-    public String putPlaylist(@PathVariable Integer playlistId, @PathVariable Playlist playlist){
+    public String putPlaylist(@PathVariable Integer playlistId, @PathVariable Playlist playlist, Model model){
         db.putPlaylist(playlist, playlistId);
-        return "/playlist/{playlistId}";
+        model.addAttribute(playlist);
+        return "playlist";
     }
 
     @RequestMapping(value = "/playlist/{playlistId}", method = RequestMethod.DELETE)
     public String deletePlaylist(@PathVariable Integer playlistId){
         db.deletePlaylist(playlistId);
-        return "/playlists";
+        return "redirect:/playlists";
     }
 }

@@ -95,6 +95,18 @@ public class RecordingServiceTest {
 
     @Test
     public void deleteRecording() throws Exception {
+        RecordingService rs = new RecordingService();
+
+        rs.postRecording(recording3);
+        rs.postRecording(recording2);
+        rs.postRecording(recording1);
+
+        assertEquals(rs.getRecording(0), recording3);
+        rs.deleteRecording(0);
+        assertNull(rs.getRecording(0));
+
+        assertEquals(rs.getRecordingList().size(), 2);
+
     }
 
 }

@@ -25,13 +25,13 @@ public class ArtistController {
     @RequestMapping(value = "/artists", method = RequestMethod.GET)
     public String getArtistList(Model model){
         model.addAttribute("artists", db.getArtistList());
-        return "artists";
+        return "artistList";
     }
 
     @RequestMapping(value = "/artist/{artistId}/recordings", method = RequestMethod.GET)
     public String getArtistsRecording(@PathVariable Integer artistId, Model model){
         model.addAttribute(db.getArtistRecordingList(artistId));
-        return "/artist/recordings";
+        return "artistRecordings";
     }
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
@@ -43,13 +43,13 @@ public class ArtistController {
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.PUT)
     public String putArtist(@PathVariable Integer artistId, Artist artist){
         db.putArtist(artist, artistId);
-        return "artist/{artistId}";
+        return "redirect:artist/{artistId}";
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.DELETE)
     public String deleteArtist(@PathVariable Integer artistId){
         db.deleteArtist(artistId);
-        return "artists";
+        return "redirect:/artists";
     }
 
 

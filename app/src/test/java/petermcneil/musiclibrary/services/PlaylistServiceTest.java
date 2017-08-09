@@ -83,6 +83,7 @@ public class PlaylistServiceTest {
 
         ps.deletePlaylist(0);
         assertNull(ps.getPlaylist(0));
+        assertEquals(ps.getPlaylistList().size(), 2);
 
         ps.deletePlaylist(2);
         assertNull(ps.getPlaylist(2));

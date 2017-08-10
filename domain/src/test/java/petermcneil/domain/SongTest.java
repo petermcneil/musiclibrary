@@ -2,29 +2,46 @@ package petermcneil.domain;
 
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
 public class SongTest {
+    String string1 = "Happy";
+    String string2 = "Sad";
+
+    Song happy = Song.songBuilder()
+            .title(string1)
+            .length(185)
+            .build();
+
     @Test
-    public void copy() throws Exception {
-        Song happy = Song.songBuilder()
-                .title("happy")
-                .length(185)
+    public void exactCopy() throws Exception {
+        Song okay = happy
+                .copy()
                 .build();
 
+        assertEquals(happy, okay);
+        assertFalse(happy == okay);
+    }
+
+    @Test
+    public void copyAndChange() throws Exception{
         Song okay = happy
                 .copy()
                 .build();
 
         Song sad = okay
                 .copy()
-                .title("sad")
+                .title(string2)
                 .length(360)
                 .build();
 
-        assertEquals(happy, okay);
-        assertFalse(happy == okay);
         assertNotEquals(okay, sad);
     }
 
+    @Test
+    public void attributeSaving() throws Exception{
+        assertThat(happy.getTitle(), is(equalTo(string1)));
+    }
 }

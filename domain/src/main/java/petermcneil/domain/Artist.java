@@ -12,18 +12,12 @@ public class Artist {
     private final String name;
     private final String type;
     private final Bio bio;
-    private final Set<Recording> recordings;
 
     private Artist(Builder from) {
         this.name = from.name;
         this.type = from.type;
         this.bio = from.bio;
 
-        if (from.recordings != null){
-            this.recordings = ImmutableSet.copyOf(from.recordings);
-        }else{
-            this.recordings = ImmutableSet.of();
-        }
     }
 
     public static Builder artistBuilder(){
@@ -44,10 +38,6 @@ public class Artist {
 
     public Bio getBio() {
         return bio;
-    }
-
-    public Set<Recording> getRecordings() {
-        return recordings;
     }
 
     @Override
@@ -77,7 +67,6 @@ public class Artist {
             this.name = toCopy.name;
             this.type = toCopy.type;
             this.bio = toCopy.bio;
-            this.recordings = toCopy.recordings;
         }
 
         public Builder name(String name){

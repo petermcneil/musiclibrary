@@ -61,20 +61,6 @@ public class ArtistServiceTest {
     }
 
     @Test
-    public void getArtistRecordingList() throws Exception {
-        ArtistService as = new ArtistService();
-
-        as.postArtist(artist1);
-        as.postArtist(artist2);
-        as.postArtist(artist3);
-
-        assertThat(as.getArtistRecordingList(2), empty());
-
-        assertEquals(as.getArtistRecordingList(0), ImmutableSet.of(recording1));
-        assertEquals(as.getArtistRecordingList(1), ImmutableSet.of(recording2, recording3, recording4));
-    }
-
-    @Test
     public void postArtist() throws Exception {
         ArtistService as = new ArtistService();
 

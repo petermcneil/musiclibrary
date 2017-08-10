@@ -29,7 +29,7 @@ public class RecordingController {
     @RequestMapping(value = "/recording/{recordingId}", method = RequestMethod.GET)
     public String getRecording(@PathVariable Integer recordingId, Model model){
         LOG.info("REQUEST : GET the recording at the id: {}", recordingId);
-        model.addAttribute(db.getRecording(recordingId));
+        model.addAttribute("recording", db.getRecording(recordingId));
         return "recording";
     }
 

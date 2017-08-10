@@ -1,5 +1,7 @@
 package petermcneil.musiclibrary.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Song;
 
@@ -12,11 +14,14 @@ public class SongService {
     private final Map<Integer, Song> songDB;
     private AtomicLong highestInt = new AtomicLong(0);
 
+    private static final Logger LOG = LoggerFactory.getLogger(RecordingService.class);
+
     public SongService(){
         songDB = new ConcurrentHashMap<>();
     }
 
     public Song getSong(Integer id) {
+        LOG.info("RESPONSE: Returning the song at the id: {}", id);
         return songDB.get(id);
     }
 
@@ -25,6 +30,7 @@ public class SongService {
         for(Map.Entry<Integer, Song> entry: songDB.entrySet()){
             songs.add(entry.getValue());
         }
+        LOG.info("RESPONSE: Returning the list of all songs with a size of {}", songs.size());
         return songs;
     }
 
@@ -32,12 +38,14 @@ public class SongService {
         Long temp = highestInt.getAndIncrement();
         Integer songId = temp.intValue();
         songDB.put(songId, song);
+        LOG.info("RESPONSE: Added the song ({}) to the db at the id: {}", song.getTitle(), songId);
         return songId;
     }
 
     public boolean deleteSong(Integer songId){
         if (songDB.containsKey(songId)){
             songDB.remove(songId);
+            LOG.info("RESPONSE: Deleted the song from the id: {}", songId);
             return true;
         }else {
             return false;
@@ -46,5 +54,6 @@ public class SongService {
 
     public void putSong(Integer songId, Song song) {
         songDB.put(songId, song);
+        LOG.info("RESPONSE: Updated the song ({}) at the id: {}", song.getTitle(), songId );
     }
 }

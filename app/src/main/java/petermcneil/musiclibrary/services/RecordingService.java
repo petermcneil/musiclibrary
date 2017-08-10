@@ -1,5 +1,7 @@
 package petermcneil.musiclibrary.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Recording;
 
@@ -14,11 +16,14 @@ public class RecordingService {
     private final Map<Integer, Recording> recordingDB;
     AtomicLong highestInt = new AtomicLong(0);
 
+    private static final Logger LOG = LoggerFactory.getLogger(RecordingService.class);
+
     public RecordingService(){
         recordingDB = new ConcurrentHashMap<>();
     }
 
     public Recording getRecording(Integer recordingId){
+        LOG.info("RESPONSE: Returning the recording at id: {}", recordingId);
         return recordingDB.get(recordingId);
     }
 
@@ -27,6 +32,8 @@ public class RecordingService {
         for(Map.Entry<Integer, Recording> entry: recordingDB.entrySet()){
             recordings.add(entry.getValue());
         }
+
+        LOG.info("RESPONSE: Returning the recording list");
         return recordings;
     }
 
@@ -34,14 +41,18 @@ public class RecordingService {
         Long tmp = highestInt.getAndIncrement();
         Integer recordingId = tmp.intValue();
         recordingDB.put(recordingId, recording);
+
+        LOG.info("RESPONSE: Posted the recording {} at the id: {}", recording.getTitle(), recordingId);
         return recordingId;
     }
 
     public void putRecording(Recording recording, Integer recordingId){
+        LOG.info("RESPONSE: Updated the recording {} at the id: {}", recording.getTitle(), recordingId);
         recordingDB.put(recordingId,recording);
     }
 
     public void deleteRecording(Integer recordingId){
+        LOG.info("RESPONSE: Deleted the recording at the id: {}", recordingId);
         recordingDB.remove(recordingId);
     }
 

@@ -1,5 +1,6 @@
 package petermcneil.musiclibrary.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +10,7 @@ import petermcneil.domain.Artist;
 import petermcneil.domain.Song;
 import petermcneil.musiclibrary.services.SongService;
 
-@RestController
+@Controller
 public class SongController {
     private final SongService db;
 
@@ -50,7 +51,7 @@ public class SongController {
     @RequestMapping(value = "/song/{songId}", method = RequestMethod.DELETE)
     public String deleteSong(@PathVariable Integer songId){
         boolean worked = db.deleteSong(songId);
-        if(worked == true){
+        if(worked){
             return "redirect:/songs";
         }else{
             //throw error

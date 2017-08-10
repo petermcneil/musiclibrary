@@ -13,7 +13,7 @@ import petermcneil.musiclibrary.services.RecordingService;
 @Controller
 public class RecordingController {
     private RecordingService db;
-    private static final Logger LOG = LoggerFactory.getLogger(RecordingService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RecordingController.class);
 
     public RecordingController (RecordingService db){
         this.db = db;

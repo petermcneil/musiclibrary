@@ -18,7 +18,7 @@ public class ArtistService {
     private final Map<Integer, Artist> artistDB;
     AtomicLong highestInt = new AtomicLong(0);
 
-    private static final Logger LOG = LoggerFactory.getLogger(RecordingService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ArtistService.class);
 
     public ArtistService(){
         artistDB = new ConcurrentHashMap<>();

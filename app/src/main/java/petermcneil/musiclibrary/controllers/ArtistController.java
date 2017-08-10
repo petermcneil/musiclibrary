@@ -15,7 +15,7 @@ import petermcneil.musiclibrary.services.RecordingService;
 @Controller
 public class ArtistController {
     private final ArtistService db;
-    private static final Logger LOG = LoggerFactory.getLogger(RecordingService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
 
     public ArtistController(ArtistService db){
         this.db = db;

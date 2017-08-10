@@ -14,7 +14,7 @@ public class SongService {
     private final Map<Integer, Song> songDB;
     private AtomicLong highestInt = new AtomicLong(0);
 
-    private static final Logger LOG = LoggerFactory.getLogger(RecordingService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SongService.class);
 
     public SongService(){
         songDB = new ConcurrentHashMap<>();

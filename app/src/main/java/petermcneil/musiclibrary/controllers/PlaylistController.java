@@ -45,7 +45,7 @@ public class PlaylistController {
     }
 
     @RequestMapping(value = "/playlist/{playlistId}", method = RequestMethod.PUT)
-    public String putPlaylist(@PathVariable Integer playlistId, @PathVariable Playlist playlist, Model model){
+    public String putPlaylist(@PathVariable Integer playlistId, Playlist playlist, Model model){
         LOG.info("REQUEST : PUT the playlist ({}) to the id: {}", playlist.getTitle(), playlistId);
         db.putPlaylist(playlist, playlistId);
         model.addAttribute(playlist);

@@ -37,7 +37,7 @@ public class PlaylistController {
         return "redirect:/playlist/{" + playlistId +"}";
     }
 
-    @RequestMapping(value = "/playlist/{playlistId}/{playlist}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/playlist/{playlistId}", method = RequestMethod.PUT)
     public String putPlaylist(@PathVariable Integer playlistId, @PathVariable Playlist playlist, Model model){
         db.putPlaylist(playlist, playlistId);
         model.addAttribute(playlist);

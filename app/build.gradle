@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBoot")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springboot}")
     }
 }
 
@@ -29,8 +29,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
-    testCompile "org.hamcrest:hamcrest-all:1.3"
-
+    testCompile("org.hamcrest:hamcrest-all:${hamcrest}")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+
     compile project(":domain")
 }

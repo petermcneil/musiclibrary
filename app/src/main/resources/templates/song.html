@@ -6,5 +6,11 @@
 </head>
 <body>
 <p th:text="'Song: ' + ${song}"/>
+
+<form action="#" th:action="@{/song}" th:object="${song}" method="post">
+    <input type="text" th:field="*{title}"/>
+    <input type="text" th:field="*{length}"/>
+    <input type="submit"/>
+</form>
 </body>
 </html>

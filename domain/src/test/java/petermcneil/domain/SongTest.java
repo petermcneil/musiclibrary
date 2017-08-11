@@ -1,5 +1,6 @@
 package petermcneil.domain;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -43,5 +44,15 @@ public class SongTest {
     @Test
     public void attributeSaving() throws Exception{
         assertThat(happy.getTitle(), is(equalTo(string1)));
+    }
+
+    @Test
+    public void seraliseTest() throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "{ \"title\" : \"SONG1\"}";
+
+        Song mySong = mapper.readValue(json, Song.class);
+
+        assertEquals(mySong.getTitle(), "SONG1" );
     }
 }

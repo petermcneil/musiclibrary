@@ -1,4 +1,4 @@
-package petermcneil.domain;
+package petermcneil.mutable;
 
 //TODO Make Set and Artists work
 public class MutableSong {

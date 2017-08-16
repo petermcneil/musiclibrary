@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import petermcneil.domain.Artist;
-import petermcneil.domain.MutableSong;
+import petermcneil.mutable.MutableSong;
 import petermcneil.domain.Song;
 import petermcneil.musiclibrary.services.SongService;
 

@@ -10,7 +10,6 @@ import petermcneil.domain.Song;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.*;
 
 

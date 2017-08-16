@@ -5,12 +5,26 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text="'Song: ' + ${song}"/>
-
 <form action="#" th:action="@{/song}" th:object="${song}" method="post">
-    <input type="text" th:field="*{title}"/>
-    <input type="text" th:field="*{length}"/>
+    <input th:field="*{title}"/>
+    <input type="number" th:field="*{length}"/>
+    <input th:field="*{genre}"/>
+    <input th:field="*{artwork}"/>
+    <input th:field="*{lyrics}"/>
     <input type="submit"/>
 </form>
+
+<table>
+    <thead>
+        <td>Title</td>
+        <td>Artist</td>
+        <td>Length</td>
+    </thead>
+    <tr>
+        <td th:text="${song?.title}">Oops! No song!</td>
+        <td th:text="${song?.leadArtist?.name}">Oops! No artist!</td>
+        <td th:text="${song?.length}">Oops! No length!</td>
+    </tr>
+</table>
 </body>
 </html>

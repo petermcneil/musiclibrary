@@ -4,13 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import petermcneil.domain.Artist;
+import petermcneil.domain.MutableSong;
 import petermcneil.domain.Song;
-import petermcneil.musiclibrary.services.RecordingService;
 import petermcneil.musiclibrary.services.SongService;
 
 @Controller
@@ -42,10 +39,21 @@ public class SongController {
     }
 
     @RequestMapping(value="/song", method = RequestMethod.POST)
-    public String postSong(Song song){
-        LOG.info("REQUEST : POST the song ({}) to the library", song.getTitle());
+    public String postSong( MutableSong muteSong){
+        LOG.info("REQUEST : POST the song ({}) to the library", muteSong.getTitle());
+
+        Song song = Song.songBuilder()
+                .title(muteSong.getTitle())
+                .length(muteSong.getLength())
+                .leadArtist(muteSong.getLeadArtist())
+                .artwork(muteSong.getArtwork())
+                .featuredArtists(muteSong.getFeaturedArtists())
+                .lyrics(muteSong.getLyrics())
+                .playcount(muteSong.getPlaycount())
+                .build();
+
         Integer songId = db.postSong(song);
-        return "redirect:/song/{" + songId + "}";
+        return "redirect:/song/" + songId;
     }
 
     @RequestMapping(value = "/song/{songId}", method = RequestMethod.PUT)

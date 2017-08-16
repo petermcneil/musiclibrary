@@ -7,10 +7,9 @@ import org.junit.rules.ExpectedException;
 import petermcneil.domain.Playlist;
 import petermcneil.domain.Song;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 import static org.junit.Assert.*;
 

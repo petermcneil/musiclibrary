@@ -11,26 +11,30 @@
     <br></br>
     <br></br>
 </div>
-    <div class="container">
-        <div class="page-header">
-            <table>
-                <thead>
-                    <tr>
-                        <td>Artist Name</td>
-                        <td>Artist Type</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="artist : ${artists}">
-                        <td th:text="${artist.name}"></td>
-                        <td th:text="${artist.type}"></td>
-                    </tr>
 
-                </tbody>
-            </table>
-        </div>
+<div class="container">
+    <div class="page-header">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Artist Name</td>
+                    <td>Artist Type</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="artist : ${artists}">
+                    <td th:text="${artist.name}"></td>
+                    <td th:text="${artist.type}"></td>
+                </tr>
 
-        <div th:replace="fragments :: footer" class="footer"></div>
+            </tbody>
+        </table>
     </div>
+</div>
+
+<div class="container">
+    <div th:replace="fragments :: footer"></div>
+</div>
+
 </body>
 </html>

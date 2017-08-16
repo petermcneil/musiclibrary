@@ -22,12 +22,6 @@ public class ArtistService {
 
     public ArtistService(){
         artistDB = new ConcurrentHashMap<>();
-
-        artistDB.put(0, Artist.artistBuilder().name("Pete").type("Solo").build());
-        artistDB.put(1, Artist.artistBuilder().name("Bob").build());
-        artistDB.put(2, Artist.artistBuilder().name("Jim").build());
-        artistDB.put(3, Artist.artistBuilder().name("Lewis").type("Band").build());
-        artistDB.put(4, Artist.artistBuilder().name("Iain").build());
     }
 
     public Artist getArtist(Integer artistId){

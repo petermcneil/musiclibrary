@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import petermcneil.domain.Artist;
+import petermcneil.domain.Bio;
 import petermcneil.musiclibrary.services.ArtistService;
 import petermcneil.musiclibrary.services.RecordingService;
+import petermcneil.mutable.MutableArtist;
 
 @Controller
 public class ArtistController {
@@ -19,6 +21,22 @@ public class ArtistController {
 
     public ArtistController(ArtistService db){
         this.db = db;
+
+        db.postArtist(Artist.artistBuilder()
+                .name("Calvin Harris")
+                .type("Solo")
+                .bio(Bio.bioBuilder()
+                        .biography("Calvin is an excellent man, blah blah blah")
+                        .build())
+                .build());
+
+        db.postArtist(Artist.artistBuilder()
+                .name("Lionel Richie")
+                .type("Solo")
+                .bio(Bio.bioBuilder()
+                        .biography("Famed for his ballads.... lalalalalalala")
+                        .build())
+                .build());
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.GET)
@@ -36,10 +54,18 @@ public class ArtistController {
     }
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
-    public String postArtist(Artist artist){
+    public String postArtist(MutableArtist muteArtist){
+
+        Artist artist = Artist.artistBuilder()
+                .name(muteArtist.getName())
+                .type(muteArtist.getType())
+                .bio(muteArtist.getBio())
+                .build();
+
         LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
         Integer artistId = db.postArtist(artist);
-        return "redirect:/artist/{" + artistId + "}";
+
+        return "redirect:/artist/" + artistId;
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.PUT)

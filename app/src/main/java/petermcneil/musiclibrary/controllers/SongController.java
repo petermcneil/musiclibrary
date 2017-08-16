@@ -19,10 +19,10 @@ public class SongController {
     public SongController(SongService db){
         this.db = db;
 
-        db.postSong(Song.songBuilder().title("song1").build());
-        db.postSong(Song.songBuilder().title("song2").leadArtist(Artist.artistBuilder().name("Blur").build()).build());
-        db.postSong(Song.songBuilder().title("song3").build());
-        db.postSong(Song.songBuilder().title("song4").build());
+        db.postSong(Song.songBuilder().title("You & Me").length(173).leadArtist(Artist.artistBuilder().name("Ryan Bluth").build()).genre("Dance").build());
+        db.postSong(Song.songBuilder().title("Song 2").length(200).leadArtist(Artist.artistBuilder().name("Blur").build()).genre("90's").build());
+        db.postSong(Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build());
+        db.postSong(Song.songBuilder().title("Hello").length(100000).leadArtist(Artist.artistBuilder().name("Lionel Richie").build()).genre("Sad").build());
     }
 
     @RequestMapping(value="/song/{songId}", method = RequestMethod.GET)

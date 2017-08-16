@@ -1,5 +1,6 @@
 package petermcneil.musiclibrary.controllers;
 
+import com.google.common.collect.ImmutableSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -45,9 +46,9 @@ public class SongController {
         Song song = Song.songBuilder()
                 .title(muteSong.getTitle())
                 .length(muteSong.getLength())
-                .leadArtist(muteSong.getLeadArtist())
+                .leadArtist(Artist.artistBuilder().name(muteSong.getLeadArtist()).build())
                 .artwork(muteSong.getArtwork())
-                .featuredArtists(muteSong.getFeaturedArtists())
+                .featuredArtists(ImmutableSet.of(Artist.artistBuilder().name(muteSong.getFeaturedArtists()).build()))
                 .lyrics(muteSong.getLyrics())
                 .playcount(muteSong.getPlaycount())
                 .build();

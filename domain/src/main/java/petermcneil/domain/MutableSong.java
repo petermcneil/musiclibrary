@@ -1,12 +1,11 @@
 package petermcneil.domain;
 
-import java.util.Set;
-
+//TODO Make Set and Artists work
 public class MutableSong {
     private String title;
     private int length;
-    private Artist leadArtist;
-    private Set<Artist> featuredArtists;
+    private String leadArtist;
+    private String featuredArtists;
     private String genre;
     private String artwork;
     private String lyrics;
@@ -23,11 +22,11 @@ public class MutableSong {
         return length;
     }
 
-    public Artist getLeadArtist() {
+    public String getLeadArtist() {
         return leadArtist;
     }
 
-    public Set<Artist> getFeaturedArtists() {
+    public String getFeaturedArtists() {
         return featuredArtists;
     }
 
@@ -55,11 +54,11 @@ public class MutableSong {
         this.length = length;
     }
 
-    public void setLeadArtist(Artist leadArtist) {
+    public void setLeadArtist(String leadArtist) {
         this.leadArtist = leadArtist;
     }
 
-    public void setFeaturedArtists(Set<Artist> featuredArtists) {
+    public void setFeaturedArtists(String featuredArtists) {
         this.featuredArtists = featuredArtists;
     }
 

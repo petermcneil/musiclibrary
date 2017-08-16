@@ -23,15 +23,25 @@ public class RecordingController {
         this.db = db;
 
         db.postRecording(Recording.recordingBuilder()
-                .title("Recording 1")
-                .tracks(ImmutableSet.of(Song.songBuilder().title("Song 1").length(20).playcount(30).build(), Song.songBuilder().title("Song 2").length(200).playcount(9000).build()))
+                .title("Cash Out")
+                .tracks(ImmutableSet.of( Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build()))
+                .type(Recording.RecordType.SINGLE)
+                .artist(Artist.artistBuilder().name("Calvin Harris").type("Solo").build())
+                .build());
+
+        db.postRecording(Recording.recordingBuilder()
+                .title("Random")
+                .tracks(ImmutableSet.of( Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build(),
+                        Song.songBuilder().title("Song 2").length(200).leadArtist(Artist.artistBuilder().name("Blur").build()).genre("90's").build(),
+                        Song.songBuilder().title("You & Me").length(173).leadArtist(Artist.artistBuilder().name("Ryan Bluth").build()).genre("Dance").build()))
+                .type(Recording.RecordType.LP)
                 .build());
     }
 
     @RequestMapping(value = "/recordings", method = RequestMethod.GET)
-    public String getRecordingList(){
+    public String getRecordingList(Model model){
         LOG.info("REQUEST: GET recording list");
-        db.getRecordingList();
+        model.addAttribute("recordings", db.getRecordingList());
         return "recordingList";
     }
 
@@ -42,6 +52,7 @@ public class RecordingController {
         return "recording";
     }
 
+    //TODO Fix the artist, type, and tracks
     @RequestMapping(value = "/recording", method = RequestMethod.POST)
     public String postRecording(MutableRecording muteRecording){
 

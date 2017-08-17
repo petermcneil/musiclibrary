@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import petermcneil.domain.Recording;
-import petermcneil.musiclibrary.services.RecordingService;
+import petermcneil.musiclibrary.services.memory.RecordingMemoryService;
 
 @Controller
 public class RecordingController {
-    private RecordingService db;
+    private RecordingMemoryService db;
     private static final Logger LOG = LoggerFactory.getLogger(RecordingController.class);
 
-    public RecordingController (RecordingService db){
+    public RecordingController (RecordingMemoryService db){
         this.db = db;
     }
 

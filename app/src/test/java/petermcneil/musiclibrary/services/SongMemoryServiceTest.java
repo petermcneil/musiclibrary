@@ -4,12 +4,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import petermcneil.domain.Song;
+import petermcneil.musiclibrary.services.memory.SongMemoryService;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class SongServiceTest {
+public class SongMemoryServiceTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
@@ -18,7 +19,7 @@ public class SongServiceTest {
 
     @Test
     public void postSong() throws Exception{
-        SongService ss = new SongService();
+        SongMemoryService ss = new SongMemoryService();
 
         assertTrue(ss.postSong(song1) == 0);
         assertTrue(ss.postSong(song2) == 1);
@@ -27,18 +28,18 @@ public class SongServiceTest {
 
     @Test
     public void putSong() throws Exception{
-        SongService ss = new SongService();
+        SongMemoryService ss = new SongMemoryService();
 
         ss.postSong(song1);
         assertTrue(ss.getSong(0) == song1);
 
-        ss.putSong(0, song2);
+        ss.putSong(song2, 0);
         assertTrue(ss.getSong(0) == song2);
     }
 
     @Test
     public void getSong() throws Exception {
-        SongService ss = new SongService();
+        SongMemoryService ss = new SongMemoryService();
         ss.postSong(song1);
 
         assertNotNull(ss.getSong(0));
@@ -53,7 +54,7 @@ public class SongServiceTest {
 
     @Test
     public void getSongList() throws Exception {
-        SongService ss = new SongService();
+        SongMemoryService ss = new SongMemoryService();
         ss.postSong(song1);
         ss.postSong(song1);
         ss.postSong(song2);
@@ -70,7 +71,7 @@ public class SongServiceTest {
 
     @Test
     public void deleteSong() throws Exception{
-        SongService ss = new SongService();
+        SongMemoryService ss = new SongMemoryService();
         ss.postSong(song1);
         ss.postSong(song2);
         ss.postSong(song1);

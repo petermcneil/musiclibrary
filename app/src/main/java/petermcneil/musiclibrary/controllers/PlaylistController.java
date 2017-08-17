@@ -7,19 +7,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import petermcneil.domain.Playlist;
-import petermcneil.musiclibrary.services.PlaylistService;
-import petermcneil.musiclibrary.services.RecordingService;
-
-import java.util.Set;
+import petermcneil.musiclibrary.services.memory.PlaylistMemoryService;
 
 @Controller
 public class PlaylistController {
-    private final PlaylistService db;
+    private final PlaylistMemoryService db;
     private static final Logger LOG = LoggerFactory.getLogger(PlaylistController.class);
 
-    public PlaylistController(PlaylistService db){
+    public PlaylistController(PlaylistMemoryService db){
         this.db = db;
     }
 

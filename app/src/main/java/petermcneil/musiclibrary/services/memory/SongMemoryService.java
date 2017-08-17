@@ -1,22 +1,23 @@
-package petermcneil.musiclibrary.services;
+package petermcneil.musiclibrary.services.memory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Song;
+import petermcneil.musiclibrary.services.interfaces.SongService;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class SongService {
+public class SongMemoryService implements SongService{
     private final Map<Integer, Song> songDB;
     private AtomicLong highestInt = new AtomicLong(0);
 
-    private static final Logger LOG = LoggerFactory.getLogger(SongService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SongMemoryService.class);
 
-    public SongService(){
+    public SongMemoryService(){
         songDB = new ConcurrentHashMap<>();
     }
 
@@ -52,7 +53,7 @@ public class SongService {
         }
     }
 
-    public void putSong(Integer songId, Song song) {
+    public void putSong(Song song, Integer songId) {
         songDB.put(songId, song);
         LOG.info("RESPONSE: Updated the song ({}) at the id: {}", song.getTitle(), songId );
     }

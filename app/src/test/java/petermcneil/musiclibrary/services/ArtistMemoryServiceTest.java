@@ -6,15 +6,15 @@ import org.junit.Test;
 import petermcneil.domain.Artist;
 import petermcneil.domain.Recording;
 import petermcneil.domain.Song;
+import petermcneil.musiclibrary.services.memory.ArtistMemoryService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.*;
 
 
-public class ArtistServiceTest {
+public class ArtistMemoryServiceTest {
     Song song1 = Song.songBuilder().title("Song 1").build();
     Song song2 = Song.songBuilder().title("Song 2").build();
 
@@ -29,7 +29,7 @@ public class ArtistServiceTest {
 
     @Test
     public void getArtist() throws Exception {
-        ArtistService as = new ArtistService();
+        ArtistMemoryService as = new ArtistMemoryService();
 
         as.postArtist(artist1);
         assertNotNull(as.getArtist(0));
@@ -44,7 +44,7 @@ public class ArtistServiceTest {
 
     @Test
     public void getArtistList() throws Exception {
-        ArtistService as = new ArtistService();
+        ArtistMemoryService as = new ArtistMemoryService();
 
         as.postArtist(artist1);
         as.postArtist(artist2);
@@ -62,7 +62,7 @@ public class ArtistServiceTest {
 
     @Test
     public void postArtist() throws Exception {
-        ArtistService as = new ArtistService();
+        ArtistMemoryService as = new ArtistMemoryService();
 
         assertTrue(as.postArtist(artist1) == 0);
         assertTrue(as.postArtist(artist1) == 1);
@@ -72,7 +72,7 @@ public class ArtistServiceTest {
 
     @Test
     public void putArtist() throws Exception {
-        ArtistService as = new ArtistService();
+        ArtistMemoryService as = new ArtistMemoryService();
 
         as.postArtist(artist1);
         as.postArtist(artist2);
@@ -89,7 +89,7 @@ public class ArtistServiceTest {
 
     @Test
     public void deleteArtist() throws Exception {
-        ArtistService as = new ArtistService();
+        ArtistMemoryService as = new ArtistMemoryService();
 
         as.postArtist(artist1);
         as.postArtist(artist2);

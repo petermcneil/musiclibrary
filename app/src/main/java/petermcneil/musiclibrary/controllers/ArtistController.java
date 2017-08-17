@@ -7,17 +7,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import petermcneil.domain.Artist;
-import petermcneil.musiclibrary.services.ArtistService;
-import petermcneil.musiclibrary.services.RecordingService;
+import petermcneil.musiclibrary.services.memory.ArtistMemoryService;
 
 @Controller
 public class ArtistController {
-    private final ArtistService db;
+    private final ArtistMemoryService db;
     private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
 
-    public ArtistController(ArtistService db){
+    public ArtistController(ArtistMemoryService db){
         this.db = db;
     }
 

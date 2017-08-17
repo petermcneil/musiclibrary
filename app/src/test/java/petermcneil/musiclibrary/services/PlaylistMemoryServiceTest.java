@@ -6,15 +6,14 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import petermcneil.domain.Playlist;
 import petermcneil.domain.Song;
+import petermcneil.musiclibrary.services.memory.PlaylistMemoryService;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
-public class PlaylistServiceTest {
+public class PlaylistMemoryServiceTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
@@ -27,7 +26,7 @@ public class PlaylistServiceTest {
 
     @Test
     public void getPlaylistList() throws Exception {
-        PlaylistService ps = new PlaylistService();
+        PlaylistMemoryService ps = new PlaylistMemoryService();
 
         ps.postPlaylist(playlist2);
         ps.postPlaylist(playlist1);
@@ -44,7 +43,7 @@ public class PlaylistServiceTest {
 
     @Test
     public void getPlaylist() throws Exception {
-        PlaylistService ps = new PlaylistService();
+        PlaylistMemoryService ps = new PlaylistMemoryService();
 
         ps.postPlaylist(playlist1);
         ps.postPlaylist(playlist2);
@@ -56,7 +55,7 @@ public class PlaylistServiceTest {
 
     @Test
     public void postPlaylist() throws Exception {
-        PlaylistService ps = new PlaylistService();
+        PlaylistMemoryService ps = new PlaylistMemoryService();
 
         assertTrue(ps.postPlaylist(playlist1) == 0);
         assertTrue(ps.postPlaylist(playlist1) == 1);
@@ -64,7 +63,7 @@ public class PlaylistServiceTest {
 
     @Test
     public void putPlaylist() throws Exception {
-        PlaylistService ps = new PlaylistService();
+        PlaylistMemoryService ps = new PlaylistMemoryService();
 
         ps.postPlaylist(playlist1);
         assertTrue(ps.getPlaylist(0) == playlist1);
@@ -75,7 +74,7 @@ public class PlaylistServiceTest {
 
     @Test
     public void deletePlaylist() throws Exception {
-        PlaylistService ps = new PlaylistService();
+        PlaylistMemoryService ps = new PlaylistMemoryService();
 
         ps.postPlaylist(playlist1);
         ps.postPlaylist(playlist2);

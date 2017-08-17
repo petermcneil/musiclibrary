@@ -7,18 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import petermcneil.domain.Artist;
 import petermcneil.domain.Song;
-import petermcneil.musiclibrary.services.RecordingService;
-import petermcneil.musiclibrary.services.SongService;
+import petermcneil.musiclibrary.services.memory.SongMemoryService;
 
 @Controller
 public class SongController {
-    private final SongService db;
+    private final SongMemoryService db;
     private static final Logger LOG = LoggerFactory.getLogger(SongController.class);
 
-    public SongController(SongService db){
+    public SongController(SongMemoryService db){
         this.db = db;
 
         db.postSong(Song.songBuilder().title("song1").build());
@@ -51,7 +49,7 @@ public class SongController {
     @RequestMapping(value = "/song/{songId}", method = RequestMethod.PUT)
     public String putSong(@PathVariable Integer songId, Song song, Model model){
         LOG.info("REQUEST : PUT the song ({}) to the id: {}", song.getTitle(), songId);
-        db.putSong(songId, song);
+        db.putSong(song, songId);
         model.addAttribute(song);
         return "song";
     }

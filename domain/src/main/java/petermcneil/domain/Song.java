@@ -1,13 +1,18 @@
 package petermcneil.domain;
 
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+
 import java.util.Set;
 
+@JsonDeserialize(builder = Song.Builder.class)
 public class Song {
     private final String title;
     private final int length;
@@ -89,6 +94,7 @@ public class Song {
         return playcount;
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static class Builder{
         private String title;
         private int length;
@@ -98,6 +104,7 @@ public class Song {
         private String artwork;
         private String lyrics;
         private int playcount;
+
 
         private Builder(){}
 

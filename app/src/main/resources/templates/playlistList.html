@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
+
+<div class="container">
+    <div th:replace="fragments :: navbar"></div>
+    <br></br>
+    <br></br>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>Playlist Name</td>
+                <td>Number of tracks</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${playlists}">
+                <td th:text="${item.title}"></td>
+                <td th:text="${item.tracks.size()}"></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <div th:replace="fragments :: footer"></div>
+</div>
 
 </body>
 </html>

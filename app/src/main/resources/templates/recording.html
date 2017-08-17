@@ -1,10 +1,101 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title th:text="${recording?.title}"/>
+    <title th:text="${recording.title}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
 <body>
+
+<div class="container">
+    <div th:replace="fragments :: navbar"></div>
+    <br></br>
+    <br></br>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6"><h1 th:text="${recording.title}"/></div>
+    </div>
+
+    <div class="container">
+            <table class="table table-striped">
+                <thead>
+                <td>Title</td>
+                <td>Type</td>
+                <td>Artwork</td>
+                <td>Artist</td>
+                </thead>
+                <tr>
+                    <td th:text="${recording?.title}"></td>
+                    <td th:text="${recording?.type}"></td>
+                    <td th:text="${recording?.artwork}"></td>
+                    <td th:text="${recording?.artist?.name}"></td>
+                </tr>
+            </table>
+
+    </div>
+
+    <div class="container">
+
+            <table class="table table-striped">
+                <thead>
+                    <td>Title</td>
+                    <td>Length</td>
+                    <td>Featured Artists</td>
+                    <td>Playcount</td>
+                </thead>
+                <tr th:each="track : ${recording.tracks}">
+                    <td th:text="${track.title}"></td>
+                    <td th:text="${track.length}"></td>
+                    <td th:text="${track.featuredArtists}"></td>
+                    <td th:text="${track.playcount}"></td>
+                </tr>
+            </table>
+    </div>
+
+
+
+    <div class="container">
+            <form action="#" th:action="@{/recording}" th:object="${recording}" method="post">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input value="" id="title" name="title"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <input value="" id="type" name="type"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="artist">Artist</label>
+                    <input value="" id="artist" name="artist"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="tracks">Tracks</label>
+                    <input value="" id="tracks" name="tracks"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="artwork">Artwork</label>
+                    <input value="" id="artwork" name="artwork"/>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+</div>
+
+<div class="container">
+    <div th:replace="fragments :: footer"></div>
+</div>
 
 </body>
 </html>

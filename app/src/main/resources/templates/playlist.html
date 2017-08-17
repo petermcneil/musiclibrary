@@ -1,10 +1,75 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title th:text="${playlist.title}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
 <body>
+
+<div class="container">
+    <div th:replace="fragments :: navbar"></div>
+    <br></br>
+    <br></br>
+</div>
+
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6"><h1 th:text="${playlist.title}"/></div>
+    <div class="col-sm-3"></div>
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+            <td>Title</td>
+            <td>Artist</td>
+            <td>Length</td>
+            <td>Artwork</td>
+            <td>Featured Artists</td>
+            <td>Lyrics</td>
+            <td>Genre</td>
+            </thead>
+            <tr th:each="song : ${playlist.tracks}">
+                <td th:text="${song?.title}"></td>
+                <td th:text="${song?.leadArtist?.name}"></td>
+                <td th:text="${song?.length}"></td>
+                <td th:text="${song?.artwork}"></td>
+                <td th:text="${song?.featuredArtists}"></td>
+                <td th:text="${song?.lyrics}"></td>
+                <td th:text="${song?.genre}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-9">
+        <form action="#" th:action="@{/playlist}" th:object="${mutablePlaylist}" method="post">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input value="" id="title" name="title"/>
+            </div>
+
+            <div class="form-group">
+                <label for="tracks">Tracks</label>
+                <input value="" id="tracks" name="tracks"/>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="container">
+    <div th:replace="fragments :: footer"></div>
+</div>
 
 </body>
 </html>

@@ -1,16 +1,11 @@
 package petermcneil.mutable;
 
-import petermcneil.domain.Bio;
-
 public class MutableArtist {
     private String name;
     private String type;
-    private Bio bio;
+    private String bio;
 
-    public MutableArtist(String name, String type, Bio bio) {
-        this.name = name;
-        this.type = type;
-        this.bio = bio;
+    public MutableArtist() {
     }
 
     public String getName() {
@@ -29,11 +24,11 @@ public class MutableArtist {
         this.type = type;
     }
 
-    public Bio getBio() {
+    public String getBio() {
         return bio;
     }
 
-    public void setBio(Bio bio) {
+    public void setBio(String bio) {
         this.bio = bio;
     }
 }

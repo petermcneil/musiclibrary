@@ -59,7 +59,7 @@ public class ArtistController {
         Artist artist = Artist.artistBuilder()
                 .name(muteArtist.getName())
                 .type(muteArtist.getType())
-                .bio(muteArtist.getBio())
+                .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
                 .build();
 
         LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
@@ -72,7 +72,7 @@ public class ArtistController {
     public String putArtist(@PathVariable Integer artistId, Artist artist){
         LOG.info("REQUEST : PUT the artist {} to the id: {}", artist.getName(), artistId);
         db.putArtist(artist, artistId);
-        return "redirect:artist/{artistId}";
+        return "redirect:artist/" + artistId;
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.DELETE)

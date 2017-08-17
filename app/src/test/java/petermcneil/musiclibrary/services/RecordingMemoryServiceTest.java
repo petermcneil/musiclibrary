@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import petermcneil.domain.Recording;
 import petermcneil.domain.Song;
+import petermcneil.musiclibrary.services.memory.RecordingMemoryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-public class RecordingServiceTest {
+public class RecordingMemoryServiceTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
@@ -32,7 +33,7 @@ public class RecordingServiceTest {
 
     @Test
     public void getRecording() throws Exception {
-        RecordingService rs = new RecordingService();
+        RecordingMemoryService rs = new RecordingMemoryService();
 
         rs.postRecording(recording1);
         rs.postRecording(recording2);
@@ -45,7 +46,7 @@ public class RecordingServiceTest {
 
     @Test
     public void getRecordingList() throws Exception {
-        RecordingService rs = new RecordingService();
+        RecordingMemoryService rs = new RecordingMemoryService();
 
         rs.postRecording(recording1);
         rs.postRecording(recording2);
@@ -65,7 +66,7 @@ public class RecordingServiceTest {
 
     @Test
     public void postRecording() throws Exception {
-        RecordingService rs = new RecordingService();
+        RecordingMemoryService rs = new RecordingMemoryService();
 
         assertTrue(rs.postRecording(recording2) == 0);
         assertTrue(rs.postRecording(recording1) == 1);
@@ -74,7 +75,7 @@ public class RecordingServiceTest {
 
     @Test
     public void putRecording() throws Exception {
-        RecordingService rs = new RecordingService();
+        RecordingMemoryService rs = new RecordingMemoryService();
 
         rs.postRecording(recording3);
         rs.postRecording(recording2);
@@ -95,7 +96,7 @@ public class RecordingServiceTest {
 
     @Test
     public void deleteRecording() throws Exception {
-        RecordingService rs = new RecordingService();
+        RecordingMemoryService rs = new RecordingMemoryService();
 
         rs.postRecording(recording3);
         rs.postRecording(recording2);

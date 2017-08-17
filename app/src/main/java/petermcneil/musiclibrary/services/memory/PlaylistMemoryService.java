@@ -1,9 +1,10 @@
-package petermcneil.musiclibrary.services;
+package petermcneil.musiclibrary.services.memory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Playlist;
+import petermcneil.musiclibrary.services.interfaces.PlaylistService;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -12,13 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class PlaylistService {
+public class PlaylistMemoryService implements PlaylistService {
     private final Map<Integer, Playlist> playlistDB;
     private AtomicLong highestInt = new AtomicLong(0);
 
-    private static final Logger LOG = LoggerFactory.getLogger(PlaylistService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PlaylistMemoryService.class);
 
-    public PlaylistService(){
+    public PlaylistMemoryService(){
         playlistDB = new ConcurrentHashMap<>();
     }
 

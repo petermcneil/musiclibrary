@@ -1,26 +1,25 @@
-package petermcneil.musiclibrary.services;
+package petermcneil.musiclibrary.services.memory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Artist;
-import petermcneil.domain.Recording;
+import petermcneil.musiclibrary.services.interfaces.ArtistService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class ArtistService {
+public class ArtistMemoryService implements ArtistService {
     private final Map<Integer, Artist> artistDB;
     AtomicLong highestInt = new AtomicLong(0);
 
-    private static final Logger LOG = LoggerFactory.getLogger(ArtistService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ArtistMemoryService.class);
 
-    public ArtistService(){
+    public ArtistMemoryService(){
         artistDB = new ConcurrentHashMap<>();
 
         artistDB.put(0, Artist.artistBuilder().name("Pete").type("Solo").build());

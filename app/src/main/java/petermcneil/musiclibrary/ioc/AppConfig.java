@@ -1,3 +1,4 @@
+/*
 package petermcneil.musiclibrary.ioc;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -54,3 +55,4 @@ public class AppConfig {
         return new NamedParameterJdbcTemplate(transactionManager.getDataSource());
     }
 }
+*/

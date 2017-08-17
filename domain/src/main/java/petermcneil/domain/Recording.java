@@ -1,7 +1,6 @@
 package petermcneil.domain;
 
 import com.google.common.collect.ImmutableSet;
-import oracle.jrockit.jfr.openmbean.RecordingType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;

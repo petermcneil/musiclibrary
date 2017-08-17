@@ -7,8 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import petermcneil.domain.Artist;
 import petermcneil.musiclibrary.services.memory.ArtistMemoryService;
+import petermcneil.domain.Bio;
+import petermcneil.mutable.MutableArtist;
 
 @Controller
 public class ArtistController {
@@ -17,6 +20,22 @@ public class ArtistController {
 
     public ArtistController(ArtistMemoryService db){
         this.db = db;
+
+        db.postArtist(Artist.artistBuilder()
+                .name("Calvin Harris")
+                .type("Solo")
+                .bio(Bio.bioBuilder()
+                        .biography("Calvin is an excellent man, blah blah blah")
+                        .build())
+                .build());
+
+        db.postArtist(Artist.artistBuilder()
+                .name("Lionel Richie")
+                .type("Solo")
+                .bio(Bio.bioBuilder()
+                        .biography("Famed for his ballads.... lalalalalalala")
+                        .build())
+                .build());
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.GET)
@@ -34,17 +53,25 @@ public class ArtistController {
     }
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
-    public String postArtist(Artist artist){
+    public String postArtist(MutableArtist muteArtist){
+
+        Artist artist = Artist.artistBuilder()
+                .name(muteArtist.getName())
+                .type(muteArtist.getType())
+                .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
+                .build();
+
         LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
         Integer artistId = db.postArtist(artist);
-        return "redirect:/artist/{" + artistId + "}";
+
+        return "redirect:/artist/" + artistId;
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.PUT)
     public String putArtist(@PathVariable Integer artistId, Artist artist){
         LOG.info("REQUEST : PUT the artist {} to the id: {}", artist.getName(), artistId);
         db.putArtist(artist, artistId);
-        return "redirect:artist/{artistId}";
+        return "redirect:artist/" + artistId;
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.DELETE)

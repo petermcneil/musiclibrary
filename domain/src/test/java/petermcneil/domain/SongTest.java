@@ -54,5 +54,14 @@ public class SongTest {
         Song mySong = mapper.readValue(json, Song.class);
 
         assertEquals(mySong.getTitle(), "SONG1" );
+
+        String json2 = "{  \n" +
+                "   \"title\":\"song2\",\n" +
+                "   \"length\": \" 284\"}";
+
+        Song song2 = mapper.readValue(json2, Song.class);
+
+        assertEquals(song2.getTitle(), "song2");
+        assertEquals(song2.getLength(), 284);
     }
 }

@@ -35,24 +35,24 @@ public class RecordingMemoryServiceTest {
     public void getRecording() throws Exception {
         RecordingMemoryService rs = new RecordingMemoryService();
 
-        rs.postRecording(recording1);
-        rs.postRecording(recording2);
+        rs.post(recording1);
+        rs.post(recording2);
 
-        assertNull(rs.getRecording(3));
+        assertNull(rs.get(3));
 
-        assertEquals(rs.getRecording(0), recording1);
-        assertEquals(rs.getRecording(1), recording2);
+        assertEquals(rs.get(0), recording1);
+        assertEquals(rs.get(1), recording2);
     }
 
     @Test
     public void getRecordingList() throws Exception {
         RecordingMemoryService rs = new RecordingMemoryService();
 
-        rs.postRecording(recording1);
-        rs.postRecording(recording2);
-        rs.postRecording(recording3);
+        rs.post(recording1);
+        rs.post(recording2);
+        rs.post(recording3);
 
-        List recordingList = new ArrayList<>(rs.getRecordingList());
+        List recordingList = new ArrayList<>(rs.getList());
 
         exception.expect(IndexOutOfBoundsException.class);
         recordingList.get(4);
@@ -61,52 +61,52 @@ public class RecordingMemoryServiceTest {
         assertEquals(recordingList.get(1), recording2);
 
         //TODO should really not allow this to post again. Fix this in general
-        //rs.postRecording(recording1);
+        //rs.post(recording1);
     }
 
     @Test
     public void postRecording() throws Exception {
         RecordingMemoryService rs = new RecordingMemoryService();
 
-        assertTrue(rs.postRecording(recording2) == 0);
-        assertTrue(rs.postRecording(recording1) == 1);
-        assertTrue(rs.postRecording(recording3) == 2);
+        assertTrue(rs.post(recording2) == 0);
+        assertTrue(rs.post(recording1) == 1);
+        assertTrue(rs.post(recording3) == 2);
     }
 
     @Test
     public void putRecording() throws Exception {
         RecordingMemoryService rs = new RecordingMemoryService();
 
-        rs.postRecording(recording3);
-        rs.postRecording(recording2);
-        rs.postRecording(recording1);
+        rs.post(recording3);
+        rs.post(recording2);
+        rs.post(recording1);
 
-        assertEquals(rs.getRecording(0), recording3);
-        assertEquals(rs.getRecording(1), recording2);
-        assertEquals(rs.getRecording(2), recording1);
+        assertEquals(rs.get(0), recording3);
+        assertEquals(rs.get(1), recording2);
+        assertEquals(rs.get(2), recording1);
 
-        rs.putRecording(recording1, 0);
-        rs.putRecording(recording3, 1);
-        rs.putRecording(recording3, 2);
+        rs.put(recording1, 0);
+        rs.put(recording3, 1);
+        rs.put(recording3, 2);
 
-        assertEquals(rs.getRecording(0), recording1);
-        assertEquals(rs.getRecording(1), recording3);
-        assertEquals(rs.getRecording(2), recording3);
+        assertEquals(rs.get(0), recording1);
+        assertEquals(rs.get(1), recording3);
+        assertEquals(rs.get(2), recording3);
     }
 
     @Test
     public void deleteRecording() throws Exception {
         RecordingMemoryService rs = new RecordingMemoryService();
 
-        rs.postRecording(recording3);
-        rs.postRecording(recording2);
-        rs.postRecording(recording1);
+        rs.post(recording3);
+        rs.post(recording2);
+        rs.post(recording1);
 
-        assertEquals(rs.getRecording(0), recording3);
-        rs.deleteRecording(0);
-        assertNull(rs.getRecording(0));
+        assertEquals(rs.get(0), recording3);
+        rs.delete(0);
+        assertNull(rs.get(0));
 
-        assertEquals(rs.getRecordingList().size(), 2);
+        assertEquals(rs.getList().size(), 2);
 
     }
 

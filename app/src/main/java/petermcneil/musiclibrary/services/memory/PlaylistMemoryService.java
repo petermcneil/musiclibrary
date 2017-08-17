@@ -4,16 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Playlist;
-import petermcneil.musiclibrary.services.interfaces.PlaylistService;
+import petermcneil.musiclibrary.services.CRUDService;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class PlaylistMemoryService implements PlaylistService {
+public class PlaylistMemoryService implements CRUDService<Playlist>{
     private final Map<Integer, Playlist> playlistDB;
     private AtomicLong highestInt = new AtomicLong(0);
 
@@ -23,8 +22,13 @@ public class PlaylistMemoryService implements PlaylistService {
         playlistDB = new ConcurrentHashMap<>();
     }
 
-    public Set<Playlist> getPlaylistList(){
-        Set<Playlist> playlistSet = new HashSet();
+    public Playlist get(Integer playlistId){
+        LOG.info("RESPONSE: Returning the playlist at the id: {}", playlistId);
+        return playlistDB.get(playlistId);
+    }
+
+    public List<Playlist> getList(){
+        List<Playlist> playlistSet = new ArrayList<>();
         for(Map.Entry<Integer, Playlist> entry: playlistDB.entrySet()){
             playlistSet.add(entry.getValue());
         }
@@ -32,12 +36,7 @@ public class PlaylistMemoryService implements PlaylistService {
         return playlistSet;
     }
 
-    public Playlist getPlaylist(Integer playlistId){
-        LOG.info("RESPONSE: Returning the playlist at the id: {}", playlistId);
-        return playlistDB.get(playlistId);
-    }
-
-    public Integer postPlaylist(Playlist playlist){
+    public Integer post(Playlist playlist){
         Long temp = highestInt.getAndIncrement();
         Integer playlistId = temp.intValue();
         playlistDB.put(playlistId, playlist);
@@ -45,12 +44,12 @@ public class PlaylistMemoryService implements PlaylistService {
         return playlistId;
     }
 
-    public void putPlaylist(Playlist playlist, Integer playlistId) {
+    public void put(Playlist playlist, Integer playlistId) {
         playlistDB.put(playlistId, playlist);
         LOG.info("RESPONSE: Updated the playlist ({}) at the id: {}", playlist.getTitle(), playlistId);
     }
 
-    public void deletePlaylist(Integer playlistId) {
+    public void delete(Integer playlistId) {
         playlistDB.remove(playlistId);
         LOG.info("RESPONSE: Deleted the playlist at the id: {}", playlistId);
     }

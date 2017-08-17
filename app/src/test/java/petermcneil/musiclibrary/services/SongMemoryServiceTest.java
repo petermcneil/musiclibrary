@@ -21,46 +21,46 @@ public class SongMemoryServiceTest {
     public void postSong() throws Exception{
         SongMemoryService ss = new SongMemoryService();
 
-        assertTrue(ss.postSong(song1) == 0);
-        assertTrue(ss.postSong(song2) == 1);
-        assertTrue(ss.postSong(song2) == 2);
+        assertTrue(ss.post(song1) == 0);
+        assertTrue(ss.post(song2) == 1);
+        assertTrue(ss.post(song2) == 2);
     }
 
     @Test
     public void putSong() throws Exception{
         SongMemoryService ss = new SongMemoryService();
 
-        ss.postSong(song1);
-        assertTrue(ss.getSong(0) == song1);
+        ss.post(song1);
+        assertTrue(ss.get(0) == song1);
 
-        ss.putSong(song2, 0);
-        assertTrue(ss.getSong(0) == song2);
+        ss.put(song2, 0);
+        assertTrue(ss.get(0) == song2);
     }
 
     @Test
     public void getSong() throws Exception {
         SongMemoryService ss = new SongMemoryService();
-        ss.postSong(song1);
+        ss.post(song1);
 
-        assertNotNull(ss.getSong(0));
-        assertEquals(ss.getSong(0), song1);
+        assertNotNull(ss.get(0));
+        assertEquals(ss.get(0), song1);
 
-        ss.postSong(song2);
-        ss.postSong(song1);
+        ss.post(song2);
+        ss.post(song1);
 
-        assertEquals(ss.getSong(2), song1);
-        assertEquals(ss.getSong(1), song2);
+        assertEquals(ss.get(2), song1);
+        assertEquals(ss.get(1), song2);
     }
 
     @Test
     public void getSongList() throws Exception {
         SongMemoryService ss = new SongMemoryService();
-        ss.postSong(song1);
-        ss.postSong(song1);
-        ss.postSong(song2);
-        ss.postSong(song2);
+        ss.post(song1);
+        ss.post(song1);
+        ss.post(song2);
+        ss.post(song2);
 
-        List<Song> songDB = ss.getSongList();
+        List<Song> songDB = ss.getList();
 
         assertEquals(songDB.get(0), song1);
         assertEquals(songDB.get(3), song2);
@@ -72,21 +72,21 @@ public class SongMemoryServiceTest {
     @Test
     public void deleteSong() throws Exception{
         SongMemoryService ss = new SongMemoryService();
-        ss.postSong(song1);
-        ss.postSong(song2);
-        ss.postSong(song1);
-        ss.postSong(song2);
+        ss.post(song1);
+        ss.post(song2);
+        ss.post(song1);
+        ss.post(song2);
 
-        ss.deleteSong(0);
-        assertNull(ss.getSong(0));
+        ss.delete(0);
+        assertNull(ss.get(0));
 
-        ss.deleteSong(3);
-        assertNull(ss.getSong(3));
+        ss.delete(3);
+        assertNull(ss.get(3));
 
-        ss.postSong(song1);
-        assertEquals(ss.getSong(4), song1);
+        ss.post(song1);
+        assertEquals(ss.get(4), song1);
 
-        ss.deleteSong(4);
-        assertNull(ss.getSong(4));
+        ss.delete(4);
+        assertNull(ss.get(4));
     }
 }

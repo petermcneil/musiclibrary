@@ -28,32 +28,32 @@ public class ArtistMemoryServiceTest {
     Artist artist3 = Artist.artistBuilder().name("artist3").build();
 
     @Test
-    public void getArtist() throws Exception {
+    public void get() throws Exception {
         ArtistMemoryService as = new ArtistMemoryService();
 
-        as.postArtist(artist1);
-        assertNotNull(as.getArtist(0));
+        as.post(artist1);
+        assertNotNull(as.get(0));
 
-        as.postArtist(artist2);
-        as.postArtist(artist3);
-        as.postArtist(artist2);
+        as.post(artist2);
+        as.post(artist3);
+        as.post(artist2);
 
-        assertTrue(as.getArtist(0) == artist1);
-        assertTrue(as.getArtist(2) == artist3);
+        assertTrue(as.get(0) == artist1);
+        assertTrue(as.get(2) == artist3);
     }
 
     @Test
-    public void getArtistList() throws Exception {
+    public void getList() throws Exception {
         ArtistMemoryService as = new ArtistMemoryService();
 
-        as.postArtist(artist1);
-        as.postArtist(artist2);
-        as.postArtist(artist3);
-        as.postArtist(artist1);
-        as.postArtist(artist2);
-        as.postArtist(artist3);
+        as.post(artist1);
+        as.post(artist2);
+        as.post(artist3);
+        as.post(artist1);
+        as.post(artist2);
+        as.post(artist3);
 
-        List artistList = new ArrayList(as.getArtistList());
+        List artistList = new ArrayList(as.getList());
 
         assertEquals(artist1, artistList.get(0));
         assertEquals(artist2, artistList.get(1));
@@ -61,45 +61,45 @@ public class ArtistMemoryServiceTest {
     }
 
     @Test
-    public void postArtist() throws Exception {
+    public void post() throws Exception {
         ArtistMemoryService as = new ArtistMemoryService();
 
-        assertTrue(as.postArtist(artist1) == 0);
-        assertTrue(as.postArtist(artist1) == 1);
-        assertTrue(as.postArtist(artist1) == 2);
-        assertTrue(as.postArtist(artist1) == 3);
+        assertTrue(as.post(artist1) == 0);
+        assertTrue(as.post(artist1) == 1);
+        assertTrue(as.post(artist1) == 2);
+        assertTrue(as.post(artist1) == 3);
     }
 
     @Test
-    public void putArtist() throws Exception {
+    public void put() throws Exception {
         ArtistMemoryService as = new ArtistMemoryService();
 
-        as.postArtist(artist1);
-        as.postArtist(artist2);
+        as.post(artist1);
+        as.post(artist2);
 
-        assertEquals(as.getArtist(0), artist1);
-        assertEquals(as.getArtist(1), artist2);
+        assertEquals(as.get(0), artist1);
+        assertEquals(as.get(1), artist2);
 
-        as.putArtist(artist2, 0);
-        as.putArtist(artist1, 1);
+        as.put(artist2, 0);
+        as.put(artist1, 1);
 
-        assertEquals(as.getArtist(0), artist2);
-        assertEquals(as.getArtist(1), artist1);
+        assertEquals(as.get(0), artist2);
+        assertEquals(as.get(1), artist1);
     }
 
     @Test
     public void deleteArtist() throws Exception {
         ArtistMemoryService as = new ArtistMemoryService();
 
-        as.postArtist(artist1);
-        as.postArtist(artist2);
+        as.post(artist1);
+        as.post(artist2);
 
-        assertEquals(as.getArtist(0), artist1);
-        assertEquals(as.getArtist(1), artist2);
+        assertEquals(as.get(0), artist1);
+        assertEquals(as.get(1), artist2);
 
-        as.deleteArtist(0);
+        as.delete(0);
 
-        assertNull(as.getArtist(0));
+        assertNull(as.get(0));
     }
 
 }

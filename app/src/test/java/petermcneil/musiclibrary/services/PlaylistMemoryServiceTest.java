@@ -28,12 +28,12 @@ public class PlaylistMemoryServiceTest {
     public void getPlaylistList() throws Exception {
         PlaylistMemoryService ps = new PlaylistMemoryService();
 
-        ps.postPlaylist(playlist2);
-        ps.postPlaylist(playlist1);
-        ps.postPlaylist(playlist1);
-        ps.postPlaylist(playlist3);
+        ps.post(playlist2);
+        ps.post(playlist1);
+        ps.post(playlist1);
+        ps.post(playlist3);
 
-        List playlists = new ArrayList(ps.getPlaylistList());
+        List playlists = new ArrayList(ps.getList());
 
         assertEquals(playlist1, playlists.get(1));
         assertEquals(playlist2, playlists.get(0));
@@ -45,49 +45,49 @@ public class PlaylistMemoryServiceTest {
     public void getPlaylist() throws Exception {
         PlaylistMemoryService ps = new PlaylistMemoryService();
 
-        ps.postPlaylist(playlist1);
-        ps.postPlaylist(playlist2);
-        ps.postPlaylist(playlist3);
+        ps.post(playlist1);
+        ps.post(playlist2);
+        ps.post(playlist3);
 
-        assertTrue(ps.getPlaylist(0) == playlist1);
-        assertTrue(ps.getPlaylist(2) == playlist3);
+        assertTrue(ps.get(0) == playlist1);
+        assertTrue(ps.get(2) == playlist3);
     }
 
     @Test
     public void postPlaylist() throws Exception {
         PlaylistMemoryService ps = new PlaylistMemoryService();
 
-        assertTrue(ps.postPlaylist(playlist1) == 0);
-        assertTrue(ps.postPlaylist(playlist1) == 1);
+        assertTrue(ps.post(playlist1) == 0);
+        assertTrue(ps.post(playlist1) == 1);
     }
 
     @Test
     public void putPlaylist() throws Exception {
         PlaylistMemoryService ps = new PlaylistMemoryService();
 
-        ps.postPlaylist(playlist1);
-        assertTrue(ps.getPlaylist(0) == playlist1);
+        ps.post(playlist1);
+        assertTrue(ps.get(0) == playlist1);
 
-        ps.putPlaylist(playlist2, 0);
-        assertTrue(ps.getPlaylist(0) == playlist2);
+        ps.put(playlist2, 0);
+        assertTrue(ps.get(0) == playlist2);
     }
 
     @Test
     public void deletePlaylist() throws Exception {
         PlaylistMemoryService ps = new PlaylistMemoryService();
 
-        ps.postPlaylist(playlist1);
-        ps.postPlaylist(playlist2);
-        ps.postPlaylist(playlist3);
+        ps.post(playlist1);
+        ps.post(playlist2);
+        ps.post(playlist3);
 
-        ps.deletePlaylist(0);
-        assertNull(ps.getPlaylist(0));
-        assertEquals(ps.getPlaylistList().size(), 2);
+        ps.delete(0);
+        assertNull(ps.get(0));
+        assertEquals(ps.getList().size(), 2);
 
-        ps.deletePlaylist(2);
-        assertNull(ps.getPlaylist(2));
+        ps.delete(2);
+        assertNull(ps.get(2));
 
-        assertTrue(ps.getPlaylist(1) == playlist2);
+        assertTrue(ps.get(1) == playlist2);
     }
 
 }

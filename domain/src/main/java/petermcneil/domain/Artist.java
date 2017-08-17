@@ -1,5 +1,8 @@
 package petermcneil.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -8,6 +11,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Set;
 
+@JsonDeserialize
 public class Artist {
     private final String name;
     private final String type;
@@ -55,6 +59,7 @@ public class Artist {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static class Builder{
         private String name;
         private String type;

@@ -3,14 +3,90 @@
 <head>
     <title th:text="${song.title}"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
 <body>
-<p th:text="'Song: ' + ${song}"/>
+<div class="container">
+    <div th:replace="fragments :: navbar"></div>
+    <br></br>
+    <br></br>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6"><h1 th:text="${song.title}"/></div>
+    </div>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <td>Title</td>
+                <td>Artist</td>
+                <td>Length</td>
+                <td>Artwork</td>
+                <td>Featured Artists</td>
+                <td>Lyrics</td>
+                <td>Genre</td>
+            </thead>
+            <tr>
+                <td th:text="${song?.title}"></td>
+                <td th:text="${song?.leadArtist?.name}"></td>
+                <td th:text="${song?.length}"></td>
+                <td th:text="${song?.artwork}"></td>
+                <td th:text="${song?.featuredArtists}"></td>
+                <td th:text="${song?.lyrics}"></td>
+                <td th:text="${song?.genre}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="container">
+        <form action="#" th:action="@{/song}" th:object="${muteableSong}" method="post">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input value="" id="title" name="title"/>
+            </div>
 
-<form action="#" th:action="@{/song}" th:object="${song}" method="post">
-    <input type="text" th:field="*{title}"/>
-    <input type="text" th:field="*{length}"/>
-    <input type="submit"/>
-</form>
+            <div class="form-group">
+                <label for="length">Length</label>
+                <input type="number" value="" id="length" name="length"/>
+            </div>
+
+            <div class="form-group">
+                <label for="leadArtist">Lead Artist</label>
+                <input value="" id="leadArtist" name="leadArtist"/>
+            </div>
+
+            <div class="form-group">
+                <label for="featuredArtists">Featured Artists</label>
+                <input value="" id="featuredArtists" name="featuredArtists"/>
+            </div>
+
+            <div class="form-group">
+                <label for="genre">Genre</label>
+                <input value="" id="genre" name="genre"/>
+            </div>
+
+            <div class="form-group">
+                <label for="artwork">Artwork</label>
+                <input value="" id="artwork" name="artwork"/>
+            </div>
+
+            <div class="form-group">
+                <label for="lyrics">Lyrics</label>
+                <input type="url" id="lyrics" name="lyrics"/>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <div th:replace="fragments :: footer"></div>
+</div>
+
 </body>
 </html>

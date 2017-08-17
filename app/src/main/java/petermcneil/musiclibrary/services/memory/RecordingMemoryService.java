@@ -4,16 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Recording;
-import petermcneil.musiclibrary.services.interfaces.RecordingService;
+import petermcneil.musiclibrary.services.CRUDService;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class RecordingMemoryService implements RecordingService {
+public
+class RecordingMemoryService implements CRUDService<Recording> {
     private final Map<Integer, Recording> recordingDB;
     AtomicLong highestInt = new AtomicLong(0);
 
@@ -23,13 +22,15 @@ public class RecordingMemoryService implements RecordingService {
         recordingDB = new ConcurrentHashMap<>();
     }
 
-    public Recording getRecording(Integer recordingId){
+    @Override
+    public Recording get(Integer recordingId){
         LOG.info("RESPONSE: Returning the recording at id: {}", recordingId);
         return recordingDB.get(recordingId);
     }
 
-    public Set<Recording> getRecordingList(){
-        Set<Recording> recordings = new HashSet<>();
+    @Override
+    public List<Recording> getList(){
+        List<Recording> recordings = new ArrayList<>();
         for(Map.Entry<Integer, Recording> entry: recordingDB.entrySet()){
             recordings.add(entry.getValue());
         }
@@ -38,7 +39,8 @@ public class RecordingMemoryService implements RecordingService {
         return recordings;
     }
 
-    public Integer postRecording(Recording recording){
+    @Override
+    public Integer post(Recording recording){
         Long tmp = highestInt.getAndIncrement();
         Integer recordingId = tmp.intValue();
         recordingDB.put(recordingId, recording);
@@ -47,12 +49,14 @@ public class RecordingMemoryService implements RecordingService {
         return recordingId;
     }
 
-    public void putRecording(Recording recording, Integer recordingId){
+    @Override
+    public void put(Recording recording, Integer recordingId){
         LOG.info("RESPONSE: Updated the recording {} at the id: {}", recording.getTitle(), recordingId);
         recordingDB.put(recordingId,recording);
     }
 
-    public void deleteRecording(Integer recordingId){
+    @Override
+    public void delete(Integer recordingId){
         LOG.info("RESPONSE: Deleted the recording at the id: {}", recordingId);
         recordingDB.remove(recordingId);
     }

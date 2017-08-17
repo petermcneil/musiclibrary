@@ -8,12 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.*;
+
 import petermcneil.domain.Artist;
 import petermcneil.mutable.MutableSong;
 import petermcneil.domain.Song;
 import petermcneil.musiclibrary.services.memory.SongMemoryService;
-import petermcneil.musiclibrary.services.SongService;
 
 @Controller
 public class SongController {
@@ -23,23 +22,23 @@ public class SongController {
     public SongController(SongMemoryService db){
         this.db = db;
 
-        db.postSong(Song.songBuilder().title("You & Me").length(173).leadArtist(Artist.artistBuilder().name("Ryan Bluth").build()).genre("Dance").build());
-        db.postSong(Song.songBuilder().title("Song 2").length(200).leadArtist(Artist.artistBuilder().name("Blur").build()).genre("90's").build());
-        db.postSong(Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build());
-        db.postSong(Song.songBuilder().title("Hello").length(100000).leadArtist(Artist.artistBuilder().name("Lionel Richie").build()).genre("Sad").build());
+        db.post(Song.songBuilder().title("You & Me").length(173).leadArtist(Artist.artistBuilder().name("Ryan Bluth").build()).genre("Dance").build());
+        db.post(Song.songBuilder().title("Song 2").length(200).leadArtist(Artist.artistBuilder().name("Blur").build()).genre("90's").build());
+        db.post(Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build());
+        db.post(Song.songBuilder().title("Hello").length(100000).leadArtist(Artist.artistBuilder().name("Lionel Richie").build()).genre("Sad").build());
     }
 
     @RequestMapping(value="/song/{songId}", method = RequestMethod.GET)
     public String getSong(@PathVariable Integer songId, Model model){
         LOG.info("REQUEST : GET the song at the id: {}", songId);
-        model.addAttribute("song", db.getSong(songId));
+        model.addAttribute("song", db.get(songId));
         return "song";
     }
 
     @RequestMapping(value="/songs", method= RequestMethod.GET)
     public String getSongs(Model model){
         LOG.info("REQUEST : GET the list of all the songs");
-        model.addAttribute("songs", db.getSongList());
+        model.addAttribute("songs", db.getList());
         return "songList";
     }
 
@@ -57,28 +56,22 @@ public class SongController {
                 .playcount(muteSong.getPlaycount())
                 .build();
 
-        Integer songId = db.postSong(song);
+        Integer songId = db.post(song);
         return "redirect:/song/" + songId;
     }
 
     @RequestMapping(value = "/song/{songId}", method = RequestMethod.PUT)
     public String putSong(@PathVariable Integer songId, Song song, Model model){
         LOG.info("REQUEST : PUT the song ({}) to the id: {}", song.getTitle(), songId);
-        db.putSong(song, songId);
+        db.put(song, songId);
         model.addAttribute(song);
         return "song";
     }
 
     @RequestMapping(value = "/song/{songId}", method = RequestMethod.DELETE)
-    public String deleteSong(@PathVariable Integer songId){
+    public void deleteSong(@PathVariable Integer songId){
         LOG.info("REQUEST : DELETE the song at the id: {}", songId);
-        boolean worked = db.deleteSong(songId);
-        if(worked){
-            return "redirect:/songs";
-        }else{
-            //throw error
-            return "";
-        }
+        db.delete(songId);
     }
 
 }

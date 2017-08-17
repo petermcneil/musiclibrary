@@ -23,14 +23,14 @@ public class RecordingController {
     public RecordingController (RecordingMemoryService db){
         this.db = db;
 
-        db.postRecording(Recording.recordingBuilder()
+        db.post(Recording.recordingBuilder()
                 .title("Cash Out")
                 .tracks(ImmutableSet.of( Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build()))
                 .type(Recording.RecordType.SINGLE)
                 .artist(Artist.artistBuilder().name("Calvin Harris").type("Solo").build())
                 .build());
 
-        db.postRecording(Recording.recordingBuilder()
+        db.post(Recording.recordingBuilder()
                 .title("Random")
                 .tracks(ImmutableSet.of( Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build(),
                         Song.songBuilder().title("Song 2").length(200).leadArtist(Artist.artistBuilder().name("Blur").build()).genre("90's").build(),
@@ -42,14 +42,14 @@ public class RecordingController {
     @RequestMapping(value = "/recordings", method = RequestMethod.GET)
     public String getRecordingList(Model model){
         LOG.info("REQUEST: GET recording list");
-        model.addAttribute("recordings", db.getRecordingList());
+        model.addAttribute("recordings", db.getList());
         return "recordingList";
     }
 
     @RequestMapping(value = "/recording/{recordingId}", method = RequestMethod.GET)
     public String getRecording(@PathVariable Integer recordingId, Model model){
         LOG.info("REQUEST : GET the recording at the id: {}", recordingId);
-        model.addAttribute("recording", db.getRecording(recordingId));
+        model.addAttribute("recording", db.get(recordingId));
         return "recording";
     }
 
@@ -67,7 +67,7 @@ public class RecordingController {
                 .build();
 
         LOG.info("REQUEST : POST this recording {}", recording.getTitle());
-        Integer recordingId = db.postRecording(recording);
+        Integer recordingId = db.post(recording);
 
         return "redirect:/recording/"+ recordingId;
     }
@@ -75,15 +75,15 @@ public class RecordingController {
     @RequestMapping(value = "/recording/{recordingId}", method = RequestMethod.PUT)
     public String putRecording(@PathVariable Integer recordingId, Recording recording, Model model){
         LOG.info("REQUEST : PUT this recording {} to the id: {}", recording.getTitle(), recordingId);
-        db.putRecording(recording, recordingId);
-        model.addAttribute(db.getRecording(recordingId));
+        db.put(recording, recordingId);
+        model.addAttribute(db.get(recordingId));
         return "recording";
     }
 
     @RequestMapping(value = "/recording/{recordingId}", method = RequestMethod.DELETE)
     public String deleteRecording(@PathVariable Integer recordingId){
         LOG.info("REQUEST : DELETE the recording at the id: {}", recordingId);
-        db.deleteRecording(recordingId);
+        db.delete(recordingId);
         return "redirect:/recordings";
     }
 }

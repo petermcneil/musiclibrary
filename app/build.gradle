@@ -30,6 +30,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
+    compile group: 'c3p0', name: 'c3p0', version: '0.9.1.2'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.10.RELEASE'
+
+
     testCompile("org.hamcrest:hamcrest-all:${hamcrest}")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 

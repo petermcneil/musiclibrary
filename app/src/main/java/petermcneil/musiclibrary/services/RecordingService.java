@@ -33,7 +33,7 @@ public class RecordingService {
             recordings.add(entry.getValue());
         }
 
-        LOG.info("RESPONSE: Returning the recording list");
+        LOG.info("RESPONSE: Returning the recording list of size {}", recordings.size());
         return recordings;
     }
 

@@ -21,7 +21,7 @@ public class ArtistController {
     public ArtistController(ArtistMemoryService db){
         this.db = db;
 
-        db.postArtist(Artist.artistBuilder()
+        db.post(Artist.artistBuilder()
                 .name("Calvin Harris")
                 .type("Solo")
                 .bio(Bio.bioBuilder()
@@ -29,7 +29,7 @@ public class ArtistController {
                         .build())
                 .build());
 
-        db.postArtist(Artist.artistBuilder()
+        db.post(Artist.artistBuilder()
                 .name("Lionel Richie")
                 .type("Solo")
                 .bio(Bio.bioBuilder()
@@ -41,14 +41,14 @@ public class ArtistController {
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.GET)
     public String getArtist(@PathVariable Integer artistId, Model model){
         LOG.info("REQUEST : GET Artist object at the id: {}", artistId);
-        model.addAttribute("artist", db.getArtist(artistId));
+        model.addAttribute("artist", db.get(artistId));
         return "artist";
     }
 
     @RequestMapping(value = "/artists", method = RequestMethod.GET)
     public String getArtistList(Model model){
         LOG.info("REQUEST : GET List of all the Artists");
-        model.addAttribute("artists", db.getArtistList());
+        model.addAttribute("artists", db.getList());
         return "artistList";
     }
 
@@ -62,7 +62,7 @@ public class ArtistController {
                 .build();
 
         LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
-        Integer artistId = db.postArtist(artist);
+        Integer artistId = db.post(artist);
 
         return "redirect:/artist/" + artistId;
     }
@@ -70,14 +70,14 @@ public class ArtistController {
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.PUT)
     public String putArtist(@PathVariable Integer artistId, Artist artist){
         LOG.info("REQUEST : PUT the artist {} to the id: {}", artist.getName(), artistId);
-        db.putArtist(artist, artistId);
+        db.put(artist, artistId);
         return "redirect:artist/" + artistId;
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.DELETE)
     public String deleteArtist(@PathVariable Integer artistId){
         LOG.info("REQUEST : DELETE the artist at the id: {}", artistId);
-        db.deleteArtist(artistId);
+        db.delete(artistId);
         return "redirect:/artists";
     }
 

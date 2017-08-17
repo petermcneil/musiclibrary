@@ -15,8 +15,6 @@ import petermcneil.musiclibrary.services.memory.PlaylistMemoryService;
 import petermcneil.domain.Song;
 import petermcneil.mutable.MutablePlaylist;
 
-import java.util.Set;
-
 @Controller
 public class PlaylistController {
     private final PlaylistMemoryService db;
@@ -25,7 +23,7 @@ public class PlaylistController {
     public PlaylistController(PlaylistMemoryService db){
         this.db = db;
 
-        db.postPlaylist(Playlist.playlistBuilder()
+        db.post(Playlist.playlistBuilder()
                 .title("Pop tunes")
                 .tracks(ImmutableList.of(
                         Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build(),
@@ -39,14 +37,14 @@ public class PlaylistController {
     @RequestMapping(value = "/playlists", method = RequestMethod.GET)
     public String getPlaylistList(Model model){
         LOG.info("REQUEST : GET a list of all the playlists");
-        model.addAttribute("playlists", db.getPlaylistList());
+        model.addAttribute("playlists", db.getList());
         return "playlistList";
     }
 
     @RequestMapping(value = "/playlist/{playlistId}", method = RequestMethod.GET)
     public String getPlaylist(@PathVariable Integer playlistId, Model model){
         LOG.info("REQUEST : GET the playlist at the id: {}", playlistId);
-        model.addAttribute(db.getPlaylist(playlistId));
+        model.addAttribute(db.get(playlistId));
         return "playlist";
     }
 
@@ -60,7 +58,7 @@ public class PlaylistController {
                 .build();
 
         LOG.info("REQUEST : POST the playlist ({}) to the db", playlist.getTitle());
-        Integer playlistId = db.postPlaylist(playlist);
+        Integer playlistId = db.post(playlist);
 
         return "redirect:/playlist/" + playlistId;
     }
@@ -68,7 +66,7 @@ public class PlaylistController {
     @RequestMapping(value = "/playlist/{playlistId}", method = RequestMethod.PUT)
     public String putPlaylist(@PathVariable Integer playlistId, Playlist playlist, Model model){
         LOG.info("REQUEST : PUT the playlist ({}) to the id: {}", playlist.getTitle(), playlistId);
-        db.putPlaylist(playlist, playlistId);
+        db.put(playlist, playlistId);
         model.addAttribute(playlist);
         return "playlist";
     }
@@ -76,7 +74,7 @@ public class PlaylistController {
     @RequestMapping(value = "/playlist/{playlistId}", method = RequestMethod.DELETE)
     public String deletePlaylist(@PathVariable Integer playlistId){
         LOG.info("REQUEST : DELETE the playlist at the id {}", playlistId);
-        db.deletePlaylist(playlistId);
+        db.delete(playlistId);
         return "redirect:/playlists";
     }
 }

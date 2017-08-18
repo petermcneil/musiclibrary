@@ -1,0 +1,6 @@
+/*DROP TABLE IF EXISTS artist_type CASCADE;*/
+
+CREATE TABLE IF NOT EXISTS artist_type(
+  artistTypeId INTEGER PRIMARY KEY NOT NULL,
+  artistType VARCHAR(15)
+);

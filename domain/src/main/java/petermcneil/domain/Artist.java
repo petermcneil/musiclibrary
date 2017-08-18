@@ -1,9 +1,9 @@
 package petermcneil.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.collect.ImmutableSet;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -64,7 +64,6 @@ public class Artist {
         private String name;
         private String type;
         private Bio bio;
-        private Set<Recording> recordings;
 
         private Builder(){}
 
@@ -86,11 +85,6 @@ public class Artist {
 
         public Builder bio(Bio bio){
             this.bio = bio;
-            return this;
-        }
-
-        public Builder recordings(Set<Recording> recordings){
-            this.recordings = recordings;
             return this;
         }
 

@@ -23,8 +23,8 @@ public class ArtistMemoryServiceTest {
     Recording recording3 = Recording.recordingBuilder().tracks(ImmutableSet.of(song1, song2, song2)).build();
     Recording recording4 = Recording.recordingBuilder().tracks(ImmutableSet.of(song1, song1, song2, song1)).build();
 
-    Artist artist1 = Artist.artistBuilder().name("artist1").recordings(ImmutableSet.of(recording1)).build();
-    Artist artist2 = Artist.artistBuilder().name("artist2").recordings(ImmutableSet.of(recording2, recording3, recording4)).build();
+    Artist artist1 = Artist.artistBuilder().name("artist1").build();
+    Artist artist2 = Artist.artistBuilder().name("artist2").build();
     Artist artist3 = Artist.artistBuilder().name("artist3").build();
 
     @Test

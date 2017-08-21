@@ -77,14 +77,14 @@
                         <div class="modal-body">
                             <form id="artistPutForm" action="#" th:action="@{/artist}" th:object="${mutableArtist}" method="post">
                                 <div class="form-group">
-                                    <input th:value="${artist?.artistId}" id="artistId" name="artistId" hidden="hidden"/>
+                                    <input th:value="${artist?.artistId}" id="artistId" name="artistId" type="text" hidden="hidden"/>
                                 </div>
                                 <div class="form-group">
-                                    <input th:value="${artist?.bio?.bioId}" id="bioId" name="bioId" hidden="hidden"/>
+                                    <input th:value="${artist?.bio?.bioId}" id="bioId" name="bioId" type="text" hidden="hidden"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="name2">Name</label>
-                                    <input th:value="${artist.name}" id="name2" name="name2"/>
+                                    <input th:value="${artist.name}" id="name2" name="name"/>
                                 </div>
 
                                 <div class="form-group">

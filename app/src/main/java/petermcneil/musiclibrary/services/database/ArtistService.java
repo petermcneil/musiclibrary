@@ -51,6 +51,7 @@ public class ArtistService implements CRUDService<Artist>{
                 while(rs.next()){
                     Artist.Builder artist =  Artist.artistBuilder();
 
+                    artist.artistId(rs.getInt("idartist"));
                     artist.name(rs.getString("name"));
                     artist.type(getType(rs.getInt("idartisttype")));
                     artist.bio(bioService.get(rs.getInt("idbio")));
@@ -84,8 +85,17 @@ public class ArtistService implements CRUDService<Artist>{
     }
 
     @Override
-    public void put(Artist object, Integer objectId) {
+    public void put(Artist artist, Integer artistId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
 
+        params.addValue("artistId", artistId);
+        params.addValue("artistName", artist.getName());
+        params.addValue("artistType", getTypeId(artist.getType()));
+
+        bioService.put(artist.getBio(), artist.getBio().getBioId());
+        params.addValue("artistBio", artist.getBio());
+
+        jdbcTemplate.update("UPDATE artist SET name=:artistName, idartisttype=:artistType WHERE idartist:=artistId", params);
     }
 
     @Override
@@ -130,6 +140,7 @@ public class ArtistService implements CRUDService<Artist>{
         public Artist extractData(ResultSet resultSet) throws SQLException, DataAccessException {
             Artist.Builder artist = Artist.artistBuilder();
             while (resultSet.next()) {
+                artist.artistId(resultSet.getInt("idartist"));
                 artist.name(resultSet.getString("name"));
                 artist.type(getType(resultSet.getInt("idartisttype")));
                 artist.bio(bioService.get(resultSet.getInt("idbio")));

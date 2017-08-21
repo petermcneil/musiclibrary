@@ -55,16 +55,29 @@ public class ArtistController {
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
     public String postArtist(MutableArtist muteArtist){
+        Integer artistId = muteArtist.getArtistId();
+        System.out.println(muteArtist.toString());
 
-        Artist artist = Artist.artistBuilder()
-                .name(muteArtist.getName())
-                .type(muteArtist.getType())
-                .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
-                .build();
+        if(artistId == null) {
+            System.out.println("artistId = null");
+            Artist artist = Artist.artistBuilder()
+                    .name(muteArtist.getName())
+                    .type(muteArtist.getType())
+                    .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
+                    .build();
 
-        LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
-        Integer artistId = db.post(artist);
-
+            LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
+            artistId = db.post(artist);
+        }else {
+            System.out.println(artistId);
+            Artist artist = Artist.artistBuilder()
+                    .artistId(artistId)
+                    .name(muteArtist.getName())
+                    .type(muteArtist.getType())
+                    .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
+                    .build();
+            db.put(artist, artistId);
+        }
         return "redirect:/artist/" + artistId;
     }
 

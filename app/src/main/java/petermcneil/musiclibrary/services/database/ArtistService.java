@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import petermcneil.domain.Artist;
 import petermcneil.domain.Bio;
@@ -16,10 +18,11 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
-public class ArtistService implements CRUDService<Artist> {
+public class ArtistService implements CRUDService<Artist>{
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final CRUDService<Bio> bioService;
@@ -35,6 +38,7 @@ public class ArtistService implements CRUDService<Artist> {
     public Artist get(Integer artistId) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("artistId", artistId);
+        LOG.info("RESPONSE: Returning the artist at the id: {}", artistId);
         return jdbcTemplate.query("SELECT * FROM artist WHERE idartist=:artistId", params, new ArtistExtractor());
     }
 
@@ -64,11 +68,19 @@ public class ArtistService implements CRUDService<Artist> {
         MapSqlParameterSource params = new MapSqlParameterSource();
 
         params.addValue("name", artist.getName());
-        params.addValue("idartisttype", artist.getType());
+        params.addValue("idartisttype", getTypeId(artist.getType()));
+
+        LOG.info("REQUEST : Add a new bio for {} and return the key", artist.getName());
         params.addValue("idbio", bioService.post(artist.getBio()));
 
-        
-        return null;
+        KeyHolder key = new GeneratedKeyHolder();
+        jdbcTemplate.update("INSERT INTO artist(name, idartisttype, idbio) VALUES (:name, :idartisttype, :idbio)", params, key);
+
+        Map<String, Object> artistData = key.getKeyList().get(0);
+        Integer artistId = Integer.parseInt(artistData.get("idartist").toString());
+
+        LOG.info("RESPONSE: Passing back the id ({}) to the GET controller", artistId);
+        return artistId;
     }
 
     @Override
@@ -91,6 +103,21 @@ public class ArtistService implements CRUDService<Artist> {
                 String result = "";
                 while(rs.next()){
                     result = rs.getString("artisttype");
+                }
+                return result;
+            }
+        });
+    }
+
+    private Integer getTypeId(String type){
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("typename", type);
+        return jdbcTemplate.query("SELECT * from artist_type WHERE artisttype=:typename", params, new ResultSetExtractor<Integer>() {
+            @Override
+            public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+                Integer result = 0;
+                while(rs.next()){
+                    result = rs.getInt("idartisttype");
                 }
                 return result;
             }

@@ -16,6 +16,7 @@ import petermcneil.musiclibrary.services.CRUDService;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BioService implements CRUDService<Bio>{
@@ -59,7 +60,11 @@ public class BioService implements CRUDService<Bio>{
 
         jdbcTemplate.update("INSERT INTO bio(biography, picture) VALUES (:biography, :image)", params, key);
 
-        return key.getKey().intValue();
+        Map<String, Object> bioData = key.getKeyList().get(0);
+        Integer bioId = Integer.parseInt(bioData.get("idbio").toString());
+
+        LOG.info("RESPONSE: Returned the bio id {}", bioId);
+        return bioId;
     }
 
     @Override

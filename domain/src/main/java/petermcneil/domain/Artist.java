@@ -16,12 +16,13 @@ public class Artist {
     private final String name;
     private final String type;
     private final Bio bio;
+    private final Integer artistId;
 
     private Artist(Builder from) {
         this.name = from.name;
         this.type = from.type;
         this.bio = from.bio;
-
+        this.artistId = from.artistId;
     }
 
     public static Builder artistBuilder(){
@@ -44,6 +45,10 @@ public class Artist {
         return bio;
     }
 
+    public Integer getArtistId() {
+        return artistId;
+    }
+
     @Override
     public boolean equals(Object o) {
         return EqualsBuilder.reflectionEquals(this, o);
@@ -64,6 +69,7 @@ public class Artist {
         private String name;
         private String type;
         private Bio bio;
+        private Integer artistId;
 
         private Builder(){}
 
@@ -71,6 +77,7 @@ public class Artist {
             this.name = toCopy.name;
             this.type = toCopy.type;
             this.bio = toCopy.bio;
+            this.artistId = toCopy.artistId;
         }
 
         public Builder name(String name){
@@ -85,6 +92,11 @@ public class Artist {
 
         public Builder bio(Bio bio){
             this.bio = bio;
+            return this;
+        }
+
+        public Builder artistId(Integer artistId){
+            this.artistId = artistId;
             return this;
         }
 

@@ -10,12 +10,7 @@ create database pml
 WITH LC_COLLATE = 'C'
 TEMPLATE template0;
 
------------------------------------------------------------
--- Create roles for us_election_2016                --
------------------------------------------------------------
-
 CREATE USER pml_java WITH PASSWORD 'pml_java' VALID UNTIL 'infinity';
-
 
 GRANT CONNECT ON DATABASE pml TO pml_java;
 

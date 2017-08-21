@@ -77,18 +77,23 @@
                         <div class="modal-body">
                             <form id="artistPutForm" action="#" th:action="@{/artist}" th:object="${mutableArtist}" method="post">
                                 <div class="form-group">
+                                    <input th:value="${artist?.artistId}" id="artistId" name="artistId" hidden="hidden"/>
+                                </div>
+                                <div class="form-group">
+                                    <input th:value="${artist?.bio?.bioId}" id="bioId" name="bioId" hidden="hidden"/>
+                                </div>
+                                <div class="form-group">
                                     <label for="name2">Name</label>
                                     <input th:value="${artist.name}" id="name2" name="name2"/>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="type2">Type</label>
-                                    <input th:value="${artist.type}" list="typeOfArtist2" id="type2" name="type"/>
-                                    <datalist id="typeOfArtist2">
-                                        <option value="Solo"></option>
-                                        <option value="Band"></option>
-                                        <option value="Duo"></option>
-                                    </datalist>
+                                    <select id="type2" name="type">
+                                        <option>Solo</option>
+                                        <option>Band</option>
+                                        <option>Duo</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">

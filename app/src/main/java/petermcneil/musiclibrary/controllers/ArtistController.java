@@ -9,18 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import petermcneil.domain.Artist;
+import petermcneil.musiclibrary.services.CRUDService;
 import petermcneil.musiclibrary.services.memory.ArtistMemoryService;
 import petermcneil.domain.Bio;
 import petermcneil.mutable.MutableArtist;
 
 @Controller
 public class ArtistController {
-    private final ArtistMemoryService db;
+    private final CRUDService<Artist> db;
     private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
 
-    public ArtistController(ArtistMemoryService db){
+    public ArtistController(CRUDService<Artist> db){
         this.db = db;
-
+/*
         db.post(Artist.artistBuilder()
                 .name("Calvin Harris")
                 .type("Solo")
@@ -35,7 +36,7 @@ public class ArtistController {
                 .bio(Bio.bioBuilder()
                         .biography("Famed for his ballads.... lalalalalalala")
                         .build())
-                .build());
+                .build());*/
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.GET)

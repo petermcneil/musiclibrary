@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+/*
 @Service
+*/
 public class ArtistMemoryService implements CRUDService<Artist> {
     private final Map<Integer, Artist> artistDB;
     AtomicLong highestInt = new AtomicLong(0);

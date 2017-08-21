@@ -36,6 +36,7 @@ public class BioService implements CRUDService<Bio>{
             public Bio extractData(ResultSet rs) throws SQLException, DataAccessException {
                 Bio.Builder bio = Bio.bioBuilder();
                 while(rs.next()){
+                    bio.bioId(rs.getInt("idbio"));
                     bio.biography(rs.getString("biography"));
                     bio.image(rs.getString("picture"));
                 }

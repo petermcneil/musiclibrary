@@ -55,9 +55,6 @@ public class ArtistController {
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
     public String postArtist(MutableArtist muteArtist){
-        Integer artistId = muteArtist.getArtistId();
-
-        if(artistId == null) {
             Bio bio = Bio.bioBuilder()
                     .biography(muteArtist.getBio())
                     .build();
@@ -69,33 +66,30 @@ public class ArtistController {
                     .build();
 
             LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
-            artistId = db.post(artist);
-        }else {
-            Bio bio = Bio.bioBuilder()
-                    .bioId(muteArtist.getBioId())
-                    .biography(muteArtist.getBio())
-                    .build();
-
-
-            Artist artist = Artist.artistBuilder()
-                    .artistId(artistId)
-                    .name(muteArtist.getName())
-                    .type(muteArtist.getType())
-                    .bio(bio)
-                    .build();
-
-            LOG.info("REQUEST : PUT the artist ({}), with id ({}) into the library", artist.getName(), artistId);
-            db.put(artist, artistId);
-        }
+            Integer artistId = db.post(artist);
         return "redirect:/artist/" + artistId;
     }
 
-    //TODO Get rid of this?
-    @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.PUT)
-    public String putArtist(@PathVariable Integer artistId, Artist artist){
-        LOG.info("REQUEST : PUT the artist {} to the id: {}", artist.getName(), artistId);
+    @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.POST)
+    public String putArtist(@PathVariable Integer artistId, MutableArtist muteArtist){
+
+        //TODO If artistId != muteArtistId then error
+        Bio bio = Bio.bioBuilder()
+                .bioId(muteArtist.getBioId())
+                .biography(muteArtist.getBio())
+                .build();
+
+
+        Artist artist = Artist.artistBuilder()
+                .artistId(artistId)
+                .name(muteArtist.getName())
+                .type(muteArtist.getType())
+                .bio(bio)
+                .build();
+
+        LOG.info("REQUEST : PUT the artist ({}), with id ({}) into the library", artist.getName(), artistId);
         db.put(artist, artistId);
-        return "redirect:artist/" + artistId;
+        return "redirect:/artist/" + artistId;
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.DELETE)

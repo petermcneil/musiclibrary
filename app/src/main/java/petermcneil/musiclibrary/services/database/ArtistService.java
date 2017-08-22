@@ -39,7 +39,19 @@ public class ArtistService implements CRUDService<Artist> {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("artistId", artistId);
         LOG.info("RESPONSE: Returning the artist at the id: {}", artistId);
-        return jdbcTemplate.query("SELECT * FROM artist WHERE idartist=:artistId", params, new ArtistExtractor());
+        return jdbcTemplate.query("SELECT * FROM artist WHERE idartist=:artistId", params, new ResultSetExtractor<Artist>() {
+            @Override
+            public Artist extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+                Artist.Builder artist = Artist.artistBuilder();
+                while (resultSet.next()) {
+                    artist.artistId(resultSet.getInt("idartist"));
+                    artist.name(resultSet.getString("name"));
+                    artist.type(getType(resultSet.getInt("idartisttype")));
+                    artist.bio(bioService.get(resultSet.getInt("idbio")));
+                }
+                return artist.build();
+            }
+        });
     }
 
     @Override
@@ -143,19 +155,5 @@ public class ArtistService implements CRUDService<Artist> {
         return result;
     }
 
-
-    private class ArtistExtractor implements  ResultSetExtractor<Artist>{
-        @Override
-        public Artist extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-            Artist.Builder artist = Artist.artistBuilder();
-            while (resultSet.next()) {
-                artist.artistId(resultSet.getInt("idartist"));
-                artist.name(resultSet.getString("name"));
-                artist.type(getType(resultSet.getInt("idartisttype")));
-                artist.bio(bioService.get(resultSet.getInt("idbio")));
-            }
-            return artist.build();
-        }
-    }
 
 }

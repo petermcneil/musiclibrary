@@ -81,8 +81,11 @@ public class BioService implements CRUDService<Bio>{
     }
 
     @Override
-    public void delete(Integer objectId) {
-
+    public void delete(Integer bioId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("bioId", bioId);
+        jdbcTemplate.update("DELETE FROM bio WHERE idbio=:bioId", params);
+        LOG.info("RESPONSE: DELETEd the bio at id ({})", bioId);
     }
 
 }

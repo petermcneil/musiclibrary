@@ -10,22 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import petermcneil.domain.Artist;
+import petermcneil.musiclibrary.services.CRUDService;
 import petermcneil.mutable.MutableSong;
 import petermcneil.domain.Song;
 import petermcneil.musiclibrary.services.memory.SongMemoryService;
 
 @Controller
 public class SongController {
-    private final SongMemoryService db;
+    private final CRUDService<Song> db;
     private static final Logger LOG = LoggerFactory.getLogger(SongController.class);
 
-    public SongController(SongMemoryService db){
+    public SongController(CRUDService<Song> db){
         this.db = db;
 
-        db.post(Song.songBuilder().title("You & Me").length(173).leadArtist(Artist.artistBuilder().name("Ryan Bluth").build()).genre("Dance").build());
+     /*   db.post(Song.songBuilder().title("You & Me").length(173).leadArtist(Artist.artistBuilder().name("Ryan Bluth").build()).genre("Dance").build());
         db.post(Song.songBuilder().title("Song 2").length(200).leadArtist(Artist.artistBuilder().name("Blur").build()).genre("90's").build());
         db.post(Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build());
-        db.post(Song.songBuilder().title("Hello").length(100000).leadArtist(Artist.artistBuilder().name("Lionel Richie").build()).genre("Sad").build());
+        db.post(Song.songBuilder().title("Hello").length(100000).leadArtist(Artist.artistBuilder().name("Lionel Richie").build()).genre("Sad").build());*/
     }
 
     @RequestMapping(value="/song/{songId}", method = RequestMethod.GET)

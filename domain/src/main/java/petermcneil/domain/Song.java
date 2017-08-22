@@ -14,6 +14,7 @@ import java.util.Set;
 
 @JsonDeserialize(builder = Song.Builder.class)
 public class Song {
+    private final Integer songId;
     private final String title;
     private final int length;
     private final Artist leadArtist;
@@ -24,6 +25,7 @@ public class Song {
     private final int playcount;
 
     private Song(Builder from){
+        this.songId = from.songId;
         this.title = from.title;
         this.length = from.length;
         this.leadArtist = from.leadArtist;
@@ -62,6 +64,10 @@ public class Song {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
+    public Integer getSongId(){
+        return songId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -96,6 +102,7 @@ public class Song {
 
     @JsonPOJOBuilder(withPrefix = "")
     public static class Builder{
+        private Integer songId;
         private String title;
         private int length;
         private Artist leadArtist;
@@ -109,6 +116,7 @@ public class Song {
         private Builder(){}
 
         private Builder (Song toCopy){
+            this.songId = toCopy.songId;
             this.title = toCopy.title;
             this.length = toCopy.length;
             this.leadArtist = toCopy.leadArtist;
@@ -117,6 +125,11 @@ public class Song {
             this.artwork = toCopy.artwork;
             this.lyrics = toCopy.lyrics;
             this.playcount = toCopy.playcount;
+        }
+
+        public Builder songId(Integer songId){
+            this.songId = songId;
+            return this;
         }
 
         public Builder title(String title){

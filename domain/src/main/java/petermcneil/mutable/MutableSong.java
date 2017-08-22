@@ -1,7 +1,7 @@
 package petermcneil.mutable;
 
-//TODO Make Set and Artists work
 public class MutableSong {
+    private Integer songId;
     private String title;
     private int length;
     private String leadArtist;
@@ -9,6 +9,7 @@ public class MutableSong {
     private String genre;
     private String artwork;
     private String lyrics;
+    public int playcount;
 
     public MutableSong(){
         super();
@@ -78,7 +79,11 @@ public class MutableSong {
         this.playcount = playcount;
     }
 
-    public int playcount;
+    public Integer getSongId() {
+        return songId;
+    }
 
-
+    public void setSongId(Integer songId) {
+        this.songId = songId;
+    }
 }

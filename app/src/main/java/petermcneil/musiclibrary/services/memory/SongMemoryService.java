@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Service
+/*@Service*/
 public class SongMemoryService implements CRUDService<Song>{
     private final Map<Integer, Song> songDB;
     private AtomicLong highestInt = new AtomicLong(0);

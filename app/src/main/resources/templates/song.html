@@ -38,50 +38,11 @@
             </tr>
         </table>
     </div>
-    <div class="container">
-        <form action="#" th:action="@{/song}" th:object="${muteableSong}" method="post">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input value="" id="title" name="title"/>
-            </div>
 
-            <div class="form-group">
-                <label for="length">Length</label>
-                <input type="number" value="" id="length" name="length"/>
-            </div>
+</div>
 
-            <div class="form-group">
-                <label for="leadArtist">Lead Artist</label>
-                <input value="" id="leadArtist" name="leadArtist"/>
-            </div>
-
-            <div class="form-group">
-                <label for="featuredArtists">Featured Artists</label>
-                <input value="" id="featuredArtists" name="featuredArtists"/>
-            </div>
-
-            <div class="form-group">
-                <label for="genre">Genre</label>
-                <input value="" id="genre" name="genre"/>
-            </div>
-
-            <div class="form-group">
-                <label for="artwork">Artwork</label>
-                <input value="" id="artwork" name="artwork"/>
-            </div>
-
-            <div class="form-group">
-                <label for="lyrics">Lyrics</label>
-                <input type="url" id="lyrics" name="lyrics"/>
-            </div>
-
-            <div class="form-group">
-                <div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
+<div class="container">
+    <div th:replace="songForm :: postForm"></div>
 </div>
 
 <div class="container">

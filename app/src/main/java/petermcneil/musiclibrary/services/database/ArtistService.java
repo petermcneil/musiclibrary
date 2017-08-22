@@ -23,7 +23,6 @@ import java.util.Map;
 
 @Service
 public class ArtistService implements CRUDService<Artist> {
-
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final CRUDService<Bio> bioService;
     private static final Logger LOG = LoggerFactory.getLogger(ArtistService.class);

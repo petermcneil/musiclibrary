@@ -99,18 +99,36 @@ public class ArtistService implements CRUDService<Artist> {
     }
 
     @Override
-    public void delete(Integer objectId) {
+    public void delete(Integer artistId) {
+        MapSqlParameterSource bioParams = new MapSqlParameterSource();
+        bioParams.addValue("artistId", artistId);
 
+        Integer bioId = jdbcTemplate.queryForObject("SELECT idbio FROM artist WHERE idartist=:artistId", bioParams, Integer.class);
+
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("artist", artistId);
+
+        jdbcTemplate.update("DELETE FROM artist WHERE idartist=:artist", params);
+
+        LOG.info("REQUEST : DELETE the bio at the id ({})", bioId);
+        bioService.delete(bioId);
+
+        LOG.info("RESPONSE: DELETEd the artist at the id ({})", artistId);
     }
+
+
+
+
 
     private String getType(Integer typeId){
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("typeId", typeId);
 
-        LOG.info("REQUEST : Retrieve artist type from the id ({})", typeId);
+        //LOG.info("REQUEST : Retrieve artist type from the id ({})", typeId);
         String result = jdbcTemplate.queryForObject("SELECT artisttype FROM artist_type WHERE idartisttype=:typeId", params, String.class);
 
-        LOG.info("RESPONSE: Returned the type of ({}) for the typeId ({})", result, typeId);
+        //LOG.info("RESPONSE: Returned the type of ({}) for the typeId ({})", result, typeId);
         return result;
     }
 
@@ -118,10 +136,10 @@ public class ArtistService implements CRUDService<Artist> {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("typename", type);
 
-        LOG.info("REQUEST : Retrieving the typeId for the type ({})", type);
+       // LOG.info("REQUEST : Retrieving the typeId for the type ({})", type);
         Integer result = jdbcTemplate.queryForObject("SELECT idartisttype from artist_type WHERE artisttype=:typename", params, Integer.class);
 
-        LOG.info("RESPONSE: Returned the typeId ({}) for the type ({})", result, type);
+        //LOG.info("RESPONSE: Returned the typeId ({}) for the type ({})", result, type);
         return result;
     }
 

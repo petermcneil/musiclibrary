@@ -12,4 +12,5 @@ public interface CRUDService<T> {
     void put(T object, Integer objectId);
 
     void delete(Integer objectId);
+
 }

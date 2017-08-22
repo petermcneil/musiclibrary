@@ -10,26 +10,35 @@
     <div th:replace="fragments :: navbar"></div>
     <br></br>
     <br></br>
+    <br></br>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            <div th:replace="forms :: artistPostForm"></div>
+        </div>
+        <div class="col-sm-10"></div>
+    </div>
 </div>
 
 <div class="container">
-    <div class="page-header">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>Artist Name</td>
-                    <td>Artist Type</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="artist : ${artists}">
-                    <td th:text="${artist.name}"></td>
-                    <td th:text="${artist.type}"></td>
-                </tr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Artist Name</td>
+                <td>Artist Type</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="artist : ${artists}">
+                <td th:text="${artist.name}"></td>
+                <td th:text="${artist.type}"></td>
+            </tr>
 
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
 </div>
 
 <div class="container">

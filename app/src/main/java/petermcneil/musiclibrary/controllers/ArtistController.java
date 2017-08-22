@@ -9,18 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import petermcneil.domain.Artist;
+import petermcneil.musiclibrary.services.CRUDService;
 import petermcneil.musiclibrary.services.memory.ArtistMemoryService;
 import petermcneil.domain.Bio;
 import petermcneil.mutable.MutableArtist;
 
 @Controller
 public class ArtistController {
-    private final ArtistMemoryService db;
+    private final CRUDService<Artist> db;
     private static final Logger LOG = LoggerFactory.getLogger(ArtistController.class);
 
-    public ArtistController(ArtistMemoryService db){
+    public ArtistController(CRUDService<Artist> db){
         this.db = db;
-
+/*
         db.post(Artist.artistBuilder()
                 .name("Calvin Harris")
                 .type("Solo")
@@ -35,7 +36,7 @@ public class ArtistController {
                 .bio(Bio.bioBuilder()
                         .biography("Famed for his ballads.... lalalalalalala")
                         .build())
-                .build());
+                .build());*/
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.GET)
@@ -54,24 +55,41 @@ public class ArtistController {
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
     public String postArtist(MutableArtist muteArtist){
+            Bio bio = Bio.bioBuilder()
+                    .biography(muteArtist.getBio())
+                    .build();
 
-        Artist artist = Artist.artistBuilder()
-                .name(muteArtist.getName())
-                .type(muteArtist.getType())
-                .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
-                .build();
+            Artist artist = Artist.artistBuilder()
+                    .name(muteArtist.getName())
+                    .type(muteArtist.getType())
+                    .bio(bio)
+                    .build();
 
-        LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
-        Integer artistId = db.post(artist);
-
+            LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
+            Integer artistId = db.post(artist);
         return "redirect:/artist/" + artistId;
     }
 
-    @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.PUT)
-    public String putArtist(@PathVariable Integer artistId, Artist artist){
-        LOG.info("REQUEST : PUT the artist {} to the id: {}", artist.getName(), artistId);
+    @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.POST)
+    public String putArtist(@PathVariable Integer artistId, MutableArtist muteArtist){
+
+        //TODO If artistId != muteArtistId then error
+        Bio bio = Bio.bioBuilder()
+                .bioId(muteArtist.getBioId())
+                .biography(muteArtist.getBio())
+                .build();
+
+
+        Artist artist = Artist.artistBuilder()
+                .artistId(artistId)
+                .name(muteArtist.getName())
+                .type(muteArtist.getType())
+                .bio(bio)
+                .build();
+
+        LOG.info("REQUEST : PUT the artist ({}), with id ({}) into the library", artist.getName(), artistId);
         db.put(artist, artistId);
-        return "redirect:artist/" + artistId;
+        return "redirect:/artist/" + artistId;
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.DELETE)

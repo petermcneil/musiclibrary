@@ -56,31 +56,41 @@ public class ArtistController {
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
     public String postArtist(MutableArtist muteArtist){
         Integer artistId = muteArtist.getArtistId();
-        System.out.println(muteArtist.toString());
 
         if(artistId == null) {
-            System.out.println("artistId = null");
+            Bio bio = Bio.bioBuilder()
+                    .biography(muteArtist.getBio())
+                    .build();
+
             Artist artist = Artist.artistBuilder()
                     .name(muteArtist.getName())
                     .type(muteArtist.getType())
-                    .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
+                    .bio(bio)
                     .build();
 
             LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
             artistId = db.post(artist);
         }else {
-            System.out.println(artistId);
+            Bio bio = Bio.bioBuilder()
+                    .bioId(muteArtist.getBioId())
+                    .biography(muteArtist.getBio())
+                    .build();
+
+
             Artist artist = Artist.artistBuilder()
                     .artistId(artistId)
                     .name(muteArtist.getName())
                     .type(muteArtist.getType())
-                    .bio(Bio.bioBuilder().biography(muteArtist.getBio()).build())
+                    .bio(bio)
                     .build();
+
+            LOG.info("REQUEST : PUT the artist ({}), with id ({}) into the library", artist.getName(), artistId);
             db.put(artist, artistId);
         }
         return "redirect:/artist/" + artistId;
     }
 
+    //TODO Get rid of this?
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.PUT)
     public String putArtist(@PathVariable Integer artistId, Artist artist){
         LOG.info("REQUEST : PUT the artist {} to the id: {}", artist.getName(), artistId);

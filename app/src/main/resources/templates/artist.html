@@ -37,11 +37,11 @@
                                     <div class="form-group">
                                         <label for="type">Type</label>
                                         <input list="typeOfArtist" id="type" name="type"/>
-                                        <datalist id="typeOfArtist">
+                                        <select id="typeOfArtist">
                                             <option value="Solo"></option>
                                             <option value="Band"></option>
                                             <option value="Duo"></option>
-                                        </datalist>
+                                        </select>
                                     </div>
 
                                     <div class="form-group">
@@ -89,17 +89,18 @@
 
                                 <div class="form-group">
                                     <label for="type2">Type</label>
-                                    <select id="type2" name="type">
-                                        <option>Solo</option>
-                                        <option>Band</option>
-                                        <option>Duo</option>
+                                    <input list="typeOfArtist2" id="type2" name="type"/>
+                                    <select id="typeOfArtist2">
+                                        <option value="Solo"></option>
+                                        <option value="Band"></option>
+                                        <option value="Duo"></option>
                                     </select>
+
                                 </div>
 
                                 <div class="form-group">
                                     <label for="bio">Bio</label>
-                                    <textarea th:value="${artist.bio.biography}" id="bio2" name="bio" rows="10"
-                                              class="form-control"></textarea>
+                                    <textarea th:text="${artist.bio.biography}" id="bio2" name="bio" rows="10" class="form-control" placeholder="Biography"></textarea>
                                 </div>
                             </form>
                         </div>

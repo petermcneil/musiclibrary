@@ -22,7 +22,7 @@ import java.util.Map;
 
 
 @Service
-public class ArtistService implements CRUDService<Artist>{
+public class ArtistService implements CRUDService<Artist> {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final CRUDService<Bio> bioService;
@@ -95,7 +95,7 @@ public class ArtistService implements CRUDService<Artist>{
         bioService.put(artist.getBio(), artist.getBio().getBioId());
         params.addValue("artistBio", artist.getBio());
 
-        jdbcTemplate.update("UPDATE artist SET name=:artistName, idartisttype=:artistType WHERE idartist:=artistId", params);
+        jdbcTemplate.update("UPDATE artist SET name=:artistName, idartisttype=:artistType WHERE idartist=:artistId", params);
     }
 
     @Override
@@ -103,35 +103,26 @@ public class ArtistService implements CRUDService<Artist>{
 
     }
 
-
     private String getType(Integer typeId){
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("typeId", typeId);
-        return jdbcTemplate.query("SELECT artisttype FROM artist_type WHERE idartisttype=:typeId", params, new ResultSetExtractor<String>() {
-            @Override
-            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
-                String result = "";
-                while(rs.next()){
-                    result = rs.getString("artisttype");
-                }
-                return result;
-            }
-        });
+
+        LOG.info("REQUEST : Retrieve artist type from the id ({})", typeId);
+        String result = jdbcTemplate.queryForObject("SELECT artisttype FROM artist_type WHERE idartisttype=:typeId", params, String.class);
+
+        LOG.info("RESPONSE: Returned the type of ({}) for the typeId ({})", result, typeId);
+        return result;
     }
 
     private Integer getTypeId(String type){
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("typename", type);
-        return jdbcTemplate.query("SELECT * from artist_type WHERE artisttype=:typename", params, new ResultSetExtractor<Integer>() {
-            @Override
-            public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
-                Integer result = 0;
-                while(rs.next()){
-                    result = rs.getInt("idartisttype");
-                }
-                return result;
-            }
-        });
+
+        LOG.info("REQUEST : Retrieving the typeId for the type ({})", type);
+        Integer result = jdbcTemplate.queryForObject("SELECT idartisttype from artist_type WHERE artisttype=:typename", params, Integer.class);
+
+        LOG.info("RESPONSE: Returned the typeId ({}) for the type ({})", result, type);
+        return result;
     }
 
 

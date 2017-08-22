@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowCallbackHandler;
+
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -69,8 +69,15 @@ public class BioService implements CRUDService<Bio>{
     }
 
     @Override
-    public void put(Bio object, Integer objectId) {
+    public void put(Bio bio, Integer bioId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
 
+        params.addValue("bioId", bioId);
+        params.addValue("biography", bio.getBiography());
+        params.addValue("image", bio.getImage());
+
+        jdbcTemplate.update("UPDATE bio SET biography=:biography, picture=:image WHERE idbio=:bioId", params);
+        LOG.info("RESPONSE: PUT the bio ({}) in the database", bioId);
     }
 
     @Override

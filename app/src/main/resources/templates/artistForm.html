@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<div th:fragment="artistPostForm" class="container">
+<div th:fragment="postForm" class="container">
     <div class="container">
         <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#postForm">&plus; Artist</button>
         <div id="postForm" class="modal fade" role="dialog">
@@ -49,7 +49,7 @@
     </div>
 </div>
 
-<div th:fragment="artistPutForm" class="container">
+<div th:fragment="putForm" class="container">
     <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#putForm">Edit
         Artist
     </button>
@@ -101,7 +101,7 @@
     </div>
 </div>
 
-<div th:fragment="artistDeleteForm" class="container">
+<div th:fragment="deleteForm" class="container">
     <form action="window.confirm('do you want to delete artist)" th:action="@{'/artist/{id}'(id=${artist.artistId})}" th:method="delete" >
         <input type="hidden" name="_method" value="delete" />
         <button type="submit" id="submitButton" class="btn btn-xs btn-danger">Delete Artist</button>

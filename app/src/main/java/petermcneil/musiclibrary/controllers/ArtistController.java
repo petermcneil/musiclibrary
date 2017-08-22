@@ -21,22 +21,6 @@ public class ArtistController {
 
     public ArtistController(CRUDService<Artist> db){
         this.db = db;
-/*
-        db.post(Artist.artistBuilder()
-                .name("Calvin Harris")
-                .type("Solo")
-                .bio(Bio.bioBuilder()
-                        .biography("Calvin is an excellent man, blah blah blah")
-                        .build())
-                .build());
-
-        db.post(Artist.artistBuilder()
-                .name("Lionel Richie")
-                .type("Solo")
-                .bio(Bio.bioBuilder()
-                        .biography("Famed for his ballads.... lalalalalalala")
-                        .build())
-                .build());*/
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.GET)

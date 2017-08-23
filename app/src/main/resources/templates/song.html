@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${song.title}"/>
+    <title th:text="${song.title} + ' - ' + ${song?.leadArtist?.name} "/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 </head>
@@ -29,10 +29,10 @@
             </thead>
             <tr>
                 <td th:text="${song?.title}"></td>
-                <td th:text="${song?.leadArtist?.name}"></td>
+                <td><a th:href="@{'/artist/{id}'(id=${song.leadArtist.artistId})}" th:text="${song.leadArtist.name}"></a></td>
                 <td th:text="${song?.length}"></td>
                 <td th:text="${song?.artwork}"></td>
-                <td th:text="${song?.featuredArtists}"></td>
+                <td><a th:each="artist : ${song?.featuredArtists}" th:href="@{'/artist/{id}'(id=${artist.artistId})}" th:text="${artist.name} + ' '"></a></td>
                 <td th:text="${song?.lyrics}"></td>
                 <td th:text="${song?.genre}"></td>
             </tr>

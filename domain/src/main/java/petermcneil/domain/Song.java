@@ -3,6 +3,7 @@ package petermcneil.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 
+import java.util.List;
 import java.util.Set;
 
 @JsonDeserialize(builder = Song.Builder.class)
@@ -18,7 +20,7 @@ public class Song {
     private final String title;
     private final int length;
     private final Artist leadArtist;
-    private final Set<Artist> featuredArtists;
+    private final List<Artist> featuredArtists;
     private final String genre;
     private final String artwork;
     private final String lyrics;
@@ -35,9 +37,9 @@ public class Song {
         this.playcount = from.playcount;
 
         if(from.featuredArtists != null){
-            this.featuredArtists = ImmutableSet.copyOf(from.featuredArtists);
+            this.featuredArtists = ImmutableList.copyOf(from.featuredArtists);
         }else{
-            this.featuredArtists = ImmutableSet.of();
+            this.featuredArtists = ImmutableList.of();
         }
     }
 
@@ -80,7 +82,7 @@ public class Song {
         return leadArtist;
     }
 
-    public Set<Artist> getFeaturedArtists() {
+    public List<Artist> getFeaturedArtists() {
         return featuredArtists;
     }
 
@@ -106,7 +108,7 @@ public class Song {
         private String title;
         private int length;
         private Artist leadArtist;
-        private Set<Artist> featuredArtists;
+        private List<Artist> featuredArtists;
         private String genre;
         private String artwork;
         private String lyrics;
@@ -167,7 +169,7 @@ public class Song {
             return this;
         }
 
-        public Builder featuredArtists(Set<Artist> featuredArtists){
+        public Builder featuredArtists(List<Artist> featuredArtists){
             this.featuredArtists = featuredArtists;
             return this;
         }

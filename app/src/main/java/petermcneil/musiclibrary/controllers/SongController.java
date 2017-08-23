@@ -1,5 +1,6 @@
 package petermcneil.musiclibrary.controllers;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class SongController {
                 .length(muteSong.getLength())
                 .leadArtist(Artist.artistBuilder().name(muteSong.getLeadArtist()).build())
                 .artwork(muteSong.getArtwork())
-                .featuredArtists(ImmutableSet.of(Artist.artistBuilder().name(muteSong.getFeaturedArtists()).build()))
+                .featuredArtists(ImmutableList.of(Artist.artistBuilder().name(muteSong.getFeaturedArtists()).build()))
                 .lyrics(muteSong.getLyrics())
                 .playcount(muteSong.getPlaycount())
                 .build();

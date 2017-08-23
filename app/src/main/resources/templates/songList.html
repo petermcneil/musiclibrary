@@ -25,7 +25,7 @@
             </thead>
             <tbody>
             <tr th:each="item : ${songs}">
-                <td th:text="${item.title}"></td>
+                <td><a th:href="@{'/song/{id}'(id=${item.songId})}" th:text="${item.title}"/></td>
                 <td th:text="${item.leadArtist.name}"></td>
                 <td th:text="${item.length}"></td>
                 <td th:text="${item.playcount}"></td>

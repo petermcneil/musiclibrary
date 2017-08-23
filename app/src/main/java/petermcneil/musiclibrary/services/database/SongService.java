@@ -128,7 +128,6 @@ public class SongService implements CRUDService<Song> {
 
                 Artist tempArtist = artistService.getByName(ftArtist.getName());
                 Integer tempArtistId;
-                System.out.println(tempArtist);
                 if (artist == null) {
                     tempArtistId = artistService.post(song.getLeadArtist());
                 } else {
@@ -143,8 +142,57 @@ public class SongService implements CRUDService<Song> {
     }
 
     @Override
-    public void put(Song object, Integer objectId) {
+    public void put(Song song, Integer songId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
 
+        params.addValue("songId", songId);
+        params.addValue("songTitle", song.getTitle());
+        params.addValue("songLength", song.getLength());
+        params.addValue("songArtwork", song.getArtwork());
+        params.addValue("songLyrics", song.getLyrics());
+        params.addValue("songPlaycount", song.getPlaycount());
+
+        jdbcTemplate.update("UPDATE song SET title=:songTitle, length=:songLength,\n" +
+                "  artwork=:songArtwork, lyrics=:songLyrics, playcount=:songPlaycount\n" +
+                "WHERE idsong=:songId", params);
+
+        MapSqlParameterSource artistParams = new MapSqlParameterSource();
+        artistParams.addValue("songId", songId);
+        artistParams.addValue("songLeadArtistId", song.getLeadArtist().getArtistId());
+
+        Artist artist = artistService.getByName(song.getLeadArtist().getName());
+        Integer artistId;
+
+        if (artist == null){
+            artistId = artistService.post(song.getLeadArtist());
+        } else{
+            artistId = artist.getArtistId();
+        }
+        artistParams.addValue("updatedArtId", artistId);
+        jdbcTemplate.update("UPDATE song_artist SET idartist=:updatedArtId, leadartist=TRUE " +
+                "WHERE idsong=:songId", artistParams);
+
+        List<Artist> ftArtists = song.getFeaturedArtists();
+
+        for (Artist ftArtist : ftArtists) {
+            if (!ftArtist.getName().isEmpty()) {
+                MapSqlParameterSource ftArtistParams = new MapSqlParameterSource();
+                ftArtistParams.addValue("songId", songId);
+                ftArtistParams.addValue("songLeadArtistId", ftArtist.getArtistId());
+
+                Artist tempArtist = artistService.getByName(ftArtist.getName());
+                Integer tempArtistId;
+                if (artist == null) {
+                    tempArtistId = artistService.post(song.getLeadArtist());
+                } else {
+                    tempArtistId = tempArtist.getArtistId();
+                }
+
+                ftArtistParams.addValue("updatedArtId", tempArtistId);
+                jdbcTemplate.update("UPDATE song_artist SET idartist=:updatedArtId, leadartist=:FALSE " +
+                        "WHERE idsong=:songId", artistParams);
+            }
+        }
     }
 
     @Override

@@ -3,7 +3,7 @@ package petermcneil.mutable;
 public class MutableSong {
     private Integer songId;
     private String title;
-    private int length;
+    private Integer length;
     private String leadArtist;
     private String featuredArtists;
     private String genre;
@@ -19,7 +19,7 @@ public class MutableSong {
         return title;
     }
 
-    public int getLength() {
+    public Integer getLength() {
         return length;
     }
 
@@ -51,7 +51,7 @@ public class MutableSong {
         this.title = title;
     }
 
-    public void setLength(int length) {
+    public void setLength(Integer length) {
         this.length = length;
     }
 

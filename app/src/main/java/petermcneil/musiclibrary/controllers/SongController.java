@@ -21,13 +21,8 @@ public class SongController {
     private final CRUDService<Song> db;
     private static final Logger LOG = LoggerFactory.getLogger(SongController.class);
 
-    public SongController(CRUDService<Song> db){
+    public SongController(CRUDService<Song> db) {
         this.db = db;
-
-     /*   db.post(Song.songBuilder().title("You & Me").length(173).leadArtist(Artist.artistBuilder().name("Ryan Bluth").build()).genre("Dance").build());
-        db.post(Song.songBuilder().title("Song 2").length(200).leadArtist(Artist.artistBuilder().name("Blur").build()).genre("90's").build());
-        db.post(Song.songBuilder().title("Cash Out").length(150).leadArtist(Artist.artistBuilder().name("Calvin Harris").build()).genre("Pop").build());
-        db.post(Song.songBuilder().title("Hello").length(100000).leadArtist(Artist.artistBuilder().name("Lionel Richie").build()).genre("Sad").build());*/
     }
 
     @RequestMapping(value="/song/{songId}", method = RequestMethod.GET)
@@ -62,12 +57,23 @@ public class SongController {
         return "redirect:/song/" + songId;
     }
 
-    @RequestMapping(value = "/song/{songId}", method = RequestMethod.PUT)
-    public String putSong(@PathVariable Integer songId, Song song, Model model){
-        LOG.info("REQUEST : PUT the song ({}) to the id: {}", song.getTitle(), songId);
+    @RequestMapping(value = "/song/{songId}", method = RequestMethod.POST)
+    public String putSong(@PathVariable Integer songId, MutableSong muteSong){
+        System.out.println("Putting famalamam");
+        Song song = Song.songBuilder()
+                .songId(songId)
+                .title(muteSong.getTitle())
+                .length(muteSong.getLength())
+                .leadArtist(Artist.artistBuilder().name(muteSong.getLeadArtist()).build())
+                .artwork(muteSong.getArtwork())
+                .featuredArtists(ImmutableList.of(Artist.artistBuilder().name(muteSong.getFeaturedArtists()).build()))
+                .lyrics(muteSong.getLyrics())
+                .playcount(muteSong.getPlaycount())
+                .build();
+
+        LOG.info("REQUEST : PUT the song ({}) to the id: {}", muteSong.getTitle(), songId);
         db.put(song, songId);
-        model.addAttribute(song);
-        return "song";
+        return "redirect:/song/" + songId;
     }
 
     @RequestMapping(value = "/song/{songId}", method = RequestMethod.DELETE)

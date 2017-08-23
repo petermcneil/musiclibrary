@@ -25,10 +25,10 @@ import java.util.Map;
 public class SongService implements CRUDService<Song> {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final CRUDService<Bio> bioService;
-    private final CRUDService<Artist> artistService;
+    private final ArtistService artistService;
     private static final Logger LOG = LoggerFactory.getLogger(SongService.class);
 
-    public SongService(final NamedParameterJdbcTemplate jdbcTemplate, CRUDService<Bio> bioService, CRUDService<Artist> artistService){
+    public SongService(final NamedParameterJdbcTemplate jdbcTemplate, CRUDService<Bio> bioService, ArtistService artistService){
         this.jdbcTemplate = jdbcTemplate;
         this.bioService = bioService;
         this.artistService = artistService;
@@ -53,6 +53,7 @@ public class SongService implements CRUDService<Song> {
                     song.leadArtist(getArtist(songId));
                     song.featuredArtists(produceFtArtistList(songId));
                 }
+                System.out.println(song.build().toString());
                 return song.build();
             }
         });
@@ -104,39 +105,40 @@ public class SongService implements CRUDService<Song> {
         MapSqlParameterSource artistParams = new MapSqlParameterSource();
         artistParams.addValue("songId", songId);
         artistParams.addValue("songLeadArtistId", song.getLeadArtist().getArtistId());
-        artistParams.addValue("songLeadArtistName", song.getLeadArtist().getName());
 
-        Boolean artistExist = jdbcTemplate.queryForObject("SELECT COUNT(1) FROM artist WHERE idartist=:songLeadArtistId OR name=:songLeadArtistName",
-                artistParams, Boolean.class);
+        Artist artist = artistService.getByName(song.getLeadArtist().getName());
+        Integer artistId;
 
-        if(artistExist){
-            jdbcTemplate.update("INSERT INTO song_artist VALUES (:songId, :songLeadArtistId, TRUE)", artistParams);
-        }else{
-            Integer artistId = artistService.post(song.getLeadArtist());
-            artistParams.addValue("updatedArtId", artistId);
-            jdbcTemplate.update("INSERT INTO song_artist VALUES (:songId, :updatedArtId, TRUE)", artistParams);
+        if (artist == null){
+            artistId = artistService.post(song.getLeadArtist());
+        } else{
+            artistId = artist.getArtistId();
         }
+        artistParams.addValue("updatedArtId", artistId);
+        jdbcTemplate.update("INSERT INTO song_artist VALUES (:songId, :updatedArtId, TRUE)", artistParams);
+
 
         List<Artist> ftArtists = song.getFeaturedArtists();
 
-        for(Artist artist : ftArtists){
-            MapSqlParameterSource ftArtistParams = new MapSqlParameterSource();
-            ftArtistParams.addValue("songId", songId);
-            ftArtistParams.addValue("songArtistId", artist.getArtistId());
-            ftArtistParams.addValue("songArtistName", artist.getName());
+        for (Artist ftArtist : ftArtists) {
+            if (!ftArtist.getName().isEmpty()) {
+                MapSqlParameterSource ftArtistParams = new MapSqlParameterSource();
+                ftArtistParams.addValue("songId", songId);
+                ftArtistParams.addValue("songLeadArtistId", ftArtist.getArtistId());
 
-            Boolean ftArtistExist = jdbcTemplate.queryForObject("SELECT COUNT(1) FROM artist WHERE idartist=:songArtistId OR name=:songArtistName",
-                    ftArtistParams, Boolean.class);
+                Artist tempArtist = artistService.getByName(ftArtist.getName());
+                Integer tempArtistId;
+                System.out.println(tempArtist);
+                if (artist == null) {
+                    tempArtistId = artistService.post(song.getLeadArtist());
+                } else {
+                    tempArtistId = tempArtist.getArtistId();
+                }
 
-            if(ftArtistExist){
-                jdbcTemplate.update("INSERT INTO song_artist VALUES (:songId, :songArtistId, FALSE)", artistParams);
-            }else{
-                Integer artistId = artistService.post(artist);
-                artistParams.addValue("updatedArtId", artistId);
-                jdbcTemplate.update("INSERT INTO song_artist VALUES (:songId, :updatedArtId, FALse)", artistParams);
+                ftArtistParams.addValue("updatedArtId", tempArtistId);
+                jdbcTemplate.update("INSERT INTO song_artist VALUES (:songId, :updatedArtId, FALSE)", ftArtistParams);
             }
         }
-        
         return songId;
     }
 

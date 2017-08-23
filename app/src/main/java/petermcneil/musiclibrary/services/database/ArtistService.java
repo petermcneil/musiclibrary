@@ -53,6 +53,26 @@ public class ArtistService implements CRUDService<Artist> {
         });
     }
 
+    public Artist getByName(String artistName) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("artistName", artistName);
+        LOG.info("RESPONSE: Returning the artist at the name: {}", artistName);
+        return jdbcTemplate.query("SELECT * FROM artist WHERE name=:artistName", params, new ResultSetExtractor<Artist>() {
+            @Override
+            public Artist extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+                Artist.Builder artist = Artist.artistBuilder();
+                if (resultSet.next()) {
+                    artist.artistId(resultSet.getInt("idartist"));
+                    artist.name(resultSet.getString("name"));
+                    artist.type(getType(resultSet.getInt("idartisttype")));
+                    artist.bio(bioService.get(resultSet.getInt("idbio")));
+                    return artist.build();
+                }
+                return null;
+            }
+        });
+    }
+
     @Override
     public List<Artist> getList() {
         return jdbcTemplate.query("SELECT * FROM artist", new EmptySqlParameterSource(), new ResultSetExtractor<List<Artist>>() {

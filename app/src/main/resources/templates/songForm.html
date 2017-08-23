@@ -3,13 +3,13 @@
 <body>
 
 <div th:fragment="postForm" class="container">
-    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#postForm">Edit Song</button>
+    <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#postForm">Add Song</button>
     <div id="postForm" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" th:text="Edit + ' ' + ${song.title}"></h4>
+                    <h4 class="modal-title" th:text="'Add a new song'"></h4>
                 </div>
                 <div class="modal-body">
                     <div class="container">
@@ -46,7 +46,7 @@
 
                             <div class="form-group">
                                 <label for="lyrics">Lyrics</label>
-                                <input type="url" id="lyrics" name="lyrics"/>
+                                <input type="text" id="lyrics" name="lyrics"/>
                             </div>
 
                         </form>
@@ -65,6 +65,75 @@
     </div>
 </div>
 
+<div th:fragment="putForm" class="container">
+    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#putForm">Edit Song</button>
+    <div id="putForm" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" th:text="Edit + ' ' + ${song.title}"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="songPuttForm" action="#" th:action="@{/song}" th:object="${muteableSong}" method="post">
+                            <div class="form-group">
+                                <label for="titlePut">Title</label>
+                                <input th:value="${song.title}" id="titlePut" name="title"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lengthPut">Length</label>
+                                <input type="number" th:value="${song.length}" id="lengthPut" name="length"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="leadArtistPut">Lead Artist</label>
+                                <input th:value="${song.leadArtist.name}" id="leadArtistPut" name="leadArtist"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="featuredArtists">Featured Artists</label>
+                                <input value="" id="featuredArtistsPut" name="featuredArtists"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="genre">Genre</label>
+                                <input th:value="${song.genre}" id="genrePut" name="genre"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="artwork">Artwork</label>
+                                <input th:value="${song.artwork}" id="artworkPut" name="artwork"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lyrics">Lyrics</label>
+                                <input th:value="${song.lyrics}" type="text" id="lyricsPut" name="lyrics"/>
+                            </div>
+
+                        </form>
+                    </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <div>
+                            <button form="songPostForm" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="deleteForm" class="container">
+    <form th:action="@{'/song/{id}'(id=${song.songId})}" th:method="delete" >
+        <input type="hidden" name="_method" value="delete" />
+        <button type="submit" id="submitButton" class="btn btn-xs btn-danger">Delete Song</button>
+    </form>
+</div>
 
 </body>
 </html>

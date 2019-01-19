@@ -2,8 +2,6 @@ package petermcneil.musiclibrary.services.database;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,8 +12,6 @@ import petermcneil.domain.Artist;
 import petermcneil.domain.Bio;
 import petermcneil.musiclibrary.services.CRUDService;
 
-import java.sql.SQLException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,56 +24,50 @@ public class ArtistService implements CRUDService<Artist> {
     private final CRUDService<Bio> bioService;
     private static final Logger LOG = LoggerFactory.getLogger(ArtistService.class);
 
-    public ArtistService(final NamedParameterJdbcTemplate jdbcTemplate, CRUDService<Bio> bio){
+    public ArtistService (final NamedParameterJdbcTemplate jdbcTemplate, CRUDService<Bio> bio) {
         this.jdbcTemplate = jdbcTemplate;
         this.bioService = bio;
     }
 
 
     @Override
-    public Artist get(Integer artistId) {
+    public Artist get (Integer artistId) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("artistId", artistId);
         LOG.info("RESPONSE: Returning the artist at the id: {}", artistId);
-        return jdbcTemplate.query("SELECT * FROM artist WHERE idartist=:artistId", params, new ResultSetExtractor<Artist>() {
-            @Override
-            public Artist extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-                Artist.Builder artist = Artist.artistBuilder();
-                while (resultSet.next()) {
-                    artist.artistId(resultSet.getInt("idartist"));
-                    artist.name(resultSet.getString("name"));
-                    artist.type(getType(resultSet.getInt("idartisttype")));
-                    artist.bio(bioService.get(resultSet.getInt("idbio")));
-                }
-                return artist.build();
+        return jdbcTemplate.query("SELECT * FROM artist WHERE idartist=:artistId", params, resultSet -> {
+            Artist.Builder artist = Artist.artistBuilder();
+            while (resultSet.next()) {
+                artist.artistId(resultSet.getInt("idartist"));
+                artist.name(resultSet.getString("name"));
+                artist.type(getType(resultSet.getInt("idartisttype")));
+                artist.bio(bioService.get(resultSet.getInt("idbio")));
             }
+            return artist.build();
         });
     }
 
     @Override
-    public List<Artist> getList() {
-        return jdbcTemplate.query("SELECT * FROM artist", new EmptySqlParameterSource(), new ResultSetExtractor<List<Artist>>() {
-            @Override
-            public List<Artist> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                List<Artist> result = new ArrayList<>();
-                while(rs.next()){
-                    Artist.Builder artist =  Artist.artistBuilder();
+    public List<Artist> getList () {
+        return jdbcTemplate.query("SELECT * FROM artist", new EmptySqlParameterSource(), rs -> {
+            List<Artist> result = new ArrayList<>();
+            while (rs.next()) {
+                final Artist artist = Artist.artistBuilder()
+                        .artistId(rs.getInt("idartist"))
+                        .name(rs.getString("name"))
+                        .type(getType(rs.getInt("idartisttype")))
+                        .bio(bioService.get(rs.getInt("idbio")))
+                        .build();
 
-                    artist.artistId(rs.getInt("idartist"));
-                    artist.name(rs.getString("name"));
-                    artist.type(getType(rs.getInt("idartisttype")));
-                    artist.bio(bioService.get(rs.getInt("idbio")));
-
-                    result.add(artist.build());
-                }
-                return result;
+                result.add(artist);
             }
+            return result;
         });
     }
 
 
     @Override
-    public Integer post(Artist artist) {
+    public Integer post (Artist artist) {
         MapSqlParameterSource params = new MapSqlParameterSource();
 
         params.addValue("name", artist.getName());
@@ -97,7 +87,7 @@ public class ArtistService implements CRUDService<Artist> {
     }
 
     @Override
-    public void put(Artist artist, Integer artistId) {
+    public void put (Artist artist, Integer artistId) {
         MapSqlParameterSource params = new MapSqlParameterSource();
 
         params.addValue("artistId", artistId);
@@ -111,7 +101,7 @@ public class ArtistService implements CRUDService<Artist> {
     }
 
     @Override
-    public void delete(Integer artistId) {
+    public void delete (Integer artistId) {
         MapSqlParameterSource bioParams = new MapSqlParameterSource();
         bioParams.addValue("artistId", artistId);
 
@@ -130,10 +120,7 @@ public class ArtistService implements CRUDService<Artist> {
     }
 
 
-
-
-
-    private String getType(Integer typeId){
+    private String getType (Integer typeId) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("typeId", typeId);
 
@@ -144,11 +131,11 @@ public class ArtistService implements CRUDService<Artist> {
         return result;
     }
 
-    private Integer getTypeId(String type){
+    private Integer getTypeId (String type) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("typename", type);
 
-       // LOG.info("REQUEST : Retrieving the typeId for the type ({})", type);
+        // LOG.info("REQUEST : Retrieving the typeId for the type ({})", type);
         Integer result = jdbcTemplate.queryForObject("SELECT idartisttype from artist_type WHERE artisttype=:typename", params, Integer.class);
 
         //LOG.info("RESPONSE: Returned the typeId ({}) for the type ({})", result, type);

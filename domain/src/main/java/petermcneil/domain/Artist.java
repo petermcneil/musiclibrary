@@ -3,13 +3,10 @@ package petermcneil.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import java.util.Set;
 
 @JsonDeserialize
 public class Artist {
@@ -25,11 +22,11 @@ public class Artist {
         this.artistId = from.artistId;
     }
 
-    public static Builder artistBuilder(){
+    public static Builder artistBuilder() {
         return new Builder();
     }
 
-    public Builder copy(){
+    public Builder copy() {
         return new Builder(this);
     }
 
@@ -60,47 +57,48 @@ public class Artist {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static class Builder{
+    public static class Builder {
         private String name;
         private String type;
         private Bio bio;
         private Integer artistId;
 
-        private Builder(){}
+        private Builder() {
+        }
 
-        private Builder(Artist toCopy){
+        private Builder(Artist toCopy) {
             this.name = toCopy.name;
             this.type = toCopy.type;
             this.bio = toCopy.bio;
             this.artistId = toCopy.artistId;
         }
 
-        public Builder name(String name){
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder type(String type){
+        public Builder type(String type) {
             this.type = type;
             return this;
         }
 
-        public Builder bio(Bio bio){
+        public Builder bio(Bio bio) {
             this.bio = bio;
             return this;
         }
 
-        public Builder artistId(Integer artistId){
+        public Builder artistId(Integer artistId) {
             this.artistId = artistId;
             return this;
         }
 
-        public Artist build(){
+        public Artist build() {
             return new Artist(this);
         }
     }

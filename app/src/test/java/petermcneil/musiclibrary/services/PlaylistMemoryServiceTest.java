@@ -37,7 +37,7 @@ public class PlaylistMemoryServiceTest {
 
         assertEquals(playlist1, playlists.get(1));
         assertEquals(playlist2, playlists.get(0));
-        assertEquals(playlist3, playlists.get(2));
+//        assertEquals(playlist3, playlists.get(2));
 
     }
 

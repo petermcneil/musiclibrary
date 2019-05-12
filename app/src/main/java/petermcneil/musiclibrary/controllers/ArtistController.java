@@ -55,18 +55,18 @@ public class ArtistController {
 
     @RequestMapping(value = "/artist", method = RequestMethod.POST)
     public String postArtist(MutableArtist muteArtist){
-            Bio bio = Bio.bioBuilder()
+            var bio = Bio.bioBuilder()
                     .biography(muteArtist.getBio())
                     .build();
 
-            Artist artist = Artist.artistBuilder()
+            var artist = Artist.artistBuilder()
                     .name(muteArtist.getName())
                     .type(muteArtist.getType())
                     .bio(bio)
                     .build();
 
             LOG.info("REQUEST : POST the artist {} to the library", artist.getName());
-            Integer artistId = db.post(artist);
+            var artistId = db.post(artist);
         return "redirect:/artist/" + artistId;
     }
 
@@ -74,13 +74,13 @@ public class ArtistController {
     public String putArtist(@PathVariable Integer artistId, MutableArtist muteArtist){
 
         //TODO If artistId != muteArtistId then error
-        Bio bio = Bio.bioBuilder()
+        var bio = Bio.bioBuilder()
                 .bioId(muteArtist.getBioId())
                 .biography(muteArtist.getBio())
                 .build();
 
 
-        Artist artist = Artist.artistBuilder()
+        var artist = Artist.artistBuilder()
                 .artistId(artistId)
                 .name(muteArtist.getName())
                 .type(muteArtist.getType())

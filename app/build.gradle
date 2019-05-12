@@ -1,43 +1,21 @@
-group 'petermcneil'
-version '1.0-SNAPSHOT'
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springboot}")
-    }
+plugins {
+    id "org.springframework.boot" version "2.1.4.RELEASE"
 }
-
-
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-
-jar {
-    baseName = 'gs-serving-web-content'
-    version =  '0.1.0'
-}
-
-repositories {
-    mavenCentral()
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: "$springboot"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$springboot"
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "$springboot"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "$springboot"
 
-    compile group: 'c3p0', name: 'c3p0', version: '0.9.1.2'
-    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.10.RELEASE'
+    compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.4'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '5.1.7.RELEASE'
 
-    compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 
+    testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: "$hamcrest"
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "$springboot"
 
-    testCompile("org.hamcrest:hamcrest-all:${hamcrest}")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
 
     compile project(":domain")
 }

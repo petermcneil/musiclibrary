@@ -21,7 +21,6 @@ public class ArtistController {
 
     public ArtistController(CRUDService<Artist> db){
         this.db = db;
-/*
         db.post(Artist.artistBuilder()
                 .name("Calvin Harris")
                 .type("Solo")
@@ -36,7 +35,7 @@ public class ArtistController {
                 .bio(Bio.bioBuilder()
                         .biography("Famed for his ballads.... lalalalalalala")
                         .build())
-                .build());*/
+                .build());
     }
 
     @RequestMapping(value = "/artist/{artistId}", method = RequestMethod.GET)

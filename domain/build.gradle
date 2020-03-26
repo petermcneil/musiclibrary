@@ -1,5 +1,6 @@
 dependencies {
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
-    compile group: 'com.google.guava', name: 'guava', version: '27.1-jre'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.8'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: "$apache"
+    compile group: 'com.google.guava', name: 'guava', version: "$guava"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$jackson"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jackson"
 }
